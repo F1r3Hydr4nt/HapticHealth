@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\Demo Pathway\Assets\Scripts\Capture\Fusion\FusedSkeleton_FromFile.cs">
+    <Files>
+      <File FileName="..\Demo Pathway\Demo Pathway.sln" Line="1" Column="1" />
+      <File FileName="..\Demo Pathway\Assets\Scripts\Capture\Fusion\FusedSkeleton_FromFile.cs" Line="9" Column="18" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -1,0 +1,9 @@
+DataDirectoryName Data
+ExecutableDirectoryName Executables
+AudioOutputDirectoryName Audio
+CalibrationOutputDirectoryName Calibration
+RecordingOutputDirectoryName Recordings
+MeshOutputDirectoryName Meshes
+CalibrationExecutableName calibration_standalone.exe
+SynchronizationExecutableName syncer_standalone.exe
+ReconstructionExecutableName 3DReconstruction\3Dreconstruction_standalone.exe

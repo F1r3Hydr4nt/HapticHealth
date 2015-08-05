@@ -1,0 +1,3 @@
+All assets found in the Resources folders and their dependencies are stored in a file called resources.assets. If an asset is already used by another level it is stored in the .sharedAssets file for that level. The Edit -> PlayerSettings First Streamed Level setting determines the level at which the resources.assets will be collected and included in the build.
+
+If a level prior to “First streamed Level” is including an asset in a Resource folder, the asset will be stored in assets for that level. if it is included afterwards, the level will reference the asset from the “resources.assets” file.

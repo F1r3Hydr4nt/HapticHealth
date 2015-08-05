@@ -1,0 +1,3 @@
+Address 195.251.117.232
+Port 22500
+ClientCount 0

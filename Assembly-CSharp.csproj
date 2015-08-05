@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{D0973743-B3E7-26E9-BB86-A9D647308D07}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Components\IntrinsicsExtrinsics\KinectIntrinsics.cs" />
+     <Compile Include="Assets\Components\IntrinsicsExtrinsics\KinectIntrinsicsProvider.cs" />
+     <Compile Include="Assets\Components\Shimmer\ShimmerTextExporter.cs" />
+     <Compile Include="Assets\Components\Shimmer\ShimmerTextImporter.cs" />
+     <Compile Include="Assets\Components\Utilities.cs" />
+     <Compile Include="Assets\Components\VclKinectBridge\Frames.cs" />
+     <Compile Include="Assets\Components\VclKinectBridge\NuiInteropEnums.cs" />
+     <Compile Include="Assets\Components\VclKinectBridge\NuiInteropStructs.cs" />
+     <Compile Include="Assets\Components\VclKinectBridge\VclKinectBridge.cs" />
+     <Compile Include="Assets\KinectVideoPlayer.cs" />
+     <Compile Include="Assets\KinectVideoRecorder.cs" />
+     <Compile Include="Assets\Plotter\PlotManager.cs" />
+     <Compile Include="Assets\Plotter\Test\TestPlotter.cs" />
+     <Compile Include="Assets\Scripts\Animate\Animation_module.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\AvatarController.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\AvatarControllerClassic.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Cubeman\CubemanController.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\FacetrackingManager.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Filters\BoneOrientationsConstraint.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Filters\JointPositionsFilter.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\InteractionManager.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Interfaces\DepthSensorInterface.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Interfaces\Kinect1Interface.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Interfaces\Kinect2Interface.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\KinectGestures.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\KinectInterop.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\KinectManager.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Samples\GetJointPositionDemo.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Samples\JointOrientationView.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Samples\LoadMainLevel.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Samples\MouseControl.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Samples\PointCloudView.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Samples\SetSceneAvatars.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\Samples\SimpleGestureListener.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\SpeechErrorHandler.cs" />
+     <Compile Include="Assets\Scripts\Animate\KinectScripts\SpeechManager.cs" />
+     <Compile Include="Assets\Scripts\Animate\Recorded_animation_module.cs" />
+     <Compile Include="Assets\Scripts\Animate\Recorded_animation_player.cs" />
+     <Compile Include="Assets\Scripts\Application_core.cs" />
+     <Compile Include="Assets\Scripts\Capture\Capture_module.cs" />
+     <Compile Include="Assets\Scripts\Capture\Capturing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\BodyFusedView.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\FusedConfiguration.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\FusedSkeleton_FromFile.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\FusedSkeleton_Main.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\FusionCapturing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\FusionExporting.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\FusionReader.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\PostureEstimator.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\MadgwickAHRS.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\MahonyAHRS.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ModalityManager.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ModalityRecording.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\RecordingManaging.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerControlling.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerExporting.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerManaging.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerReceiving.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerRecording.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerSending.cs" />
+     <Compile Include="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerSettings.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\BodyTracking.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectImgControllers\DisplayColor.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectImgControllers\DisplayDepth.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectModelControllers\KinectModelControllerV2.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectOneControlling.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectOneRecording.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectOneSettings.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectWrapper\DepthWrapper.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectWrapper\DeviceOrEmulator.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectWrapper\KinectOneEmulator.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectWrapper\KinectOneInterop.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectWrapper\KinectOneRecorder.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectWrapper\KinectOneSensor.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectWrapper\SkeletonOneWrapper.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\KinectsOneManaging.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\MinimapColorRendering.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\ScanImageCapturing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\ScanImageRecording.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\Skeleton\SkeletonOneExporterFactory.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\Skeleton\SkeletonOneExporters.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\Skeleton\SkeletonOneTextImporter.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\SkeletonOneExporting.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect1\WithKinectHandle.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\BodySourceManager.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\BodySourceView.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\ColorSourceManager.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\ColorSourceView.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\CoordinateMapperManager.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\CoordinateMapperView.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\DepthSourceManager.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\DepthSourceView.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\DisableOnStart.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\InfraredSourceManager.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\InfraredSourceView.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2 - Standalone\MultiSourceManager.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Configuration.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Console.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\IO\Containers.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\IO\IOXtensions.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\IO\Skeleton.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\IO\SkeletonExporting.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\IO\SklxtExporter.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\IO\Structs.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Kinect2Managing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Kinect2Sample.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Kinect2StateManaging.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Local\AudioCapturing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Local\ColorCapturing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Local\DepthCapturing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Local\InfraredCapturing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Local\Kinect2Controlling.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Local\SkeletonCapturing.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\PlayAndLearnSample.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Remote\FileReceiver.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Remote\FileTransfer.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Remote\Kinect2Controlling.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Remote\Message.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Standalone.cs" />
+     <Compile Include="Assets\Scripts\Capture\Kinect2\Structs.cs" />
+     <Compile Include="Assets\Scripts\Compare\CResources.cs" />
+     <Compile Include="Assets\Scripts\Compare\Compare_module.cs" />
+     <Compile Include="Assets\Scripts\Compare\ComparisonTest.cs" />
+     <Compile Include="Assets\Scripts\Database\Activity.cs" />
+     <Compile Include="Assets\Scripts\Database\Animation_Heroe.cs" />
+     <Compile Include="Assets\Scripts\Database\Animation_Player.cs" />
+     <Compile Include="Assets\Scripts\Database\Animation_Replay.cs" />
+     <Compile Include="Assets\Scripts\Database\Avatar.cs" />
+     <Compile Include="Assets\Scripts\Database\Avatar_Texture.cs" />
+     <Compile Include="Assets\Scripts\Database\Club.cs" />
+     <Compile Include="Assets\Scripts\Database\Coach.cs" />
+     <Compile Include="Assets\Scripts\Database\DataToServer.cs" />
+     <Compile Include="Assets\Scripts\Database\Database_module.cs" />
+     <Compile Include="Assets\Scripts\Database\DbAccess.cs" />
+     <Compile Include="Assets\Scripts\Database\Discipline.cs" />
+     <Compile Include="Assets\Scripts\Database\Feedback.cs" />
+     <Compile Include="Assets\Scripts\Database\GlobalVariables.cs" />
+     <Compile Include="Assets\Scripts\Database\Heroe.cs" />
+     <Compile Include="Assets\Scripts\Database\JsonMikel.cs" />
+     <Compile Include="Assets\Scripts\Database\Modality_Replay.cs" />
+     <Compile Include="Assets\Scripts\Database\Player.cs" />
+     <Compile Include="Assets\Scripts\Database\PlayerPosition.cs" />
+     <Compile Include="Assets\Scripts\Database\PlayerPosition2.cs" />
+     <Compile Include="Assets\Scripts\Database\PlayerTeam.cs" />
+     <Compile Include="Assets\Scripts\Database\Position.cs" />
+     <Compile Include="Assets\Scripts\Database\Skill.cs" />
+     <Compile Include="Assets\Scripts\Database\Squad.cs" />
+     <Compile Include="Assets\Scripts\Database\Statistics.cs" />
+     <Compile Include="Assets\Scripts\Database\Statistics_Plot.cs" />
+     <Compile Include="Assets\Scripts\Database\Team.cs" />
+     <Compile Include="Assets\Scripts\Database\User.cs" />
+     <Compile Include="Assets\Scripts\Enum_class.cs" />
+     <Compile Include="Assets\Scripts\GUI\Activity_InfoPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\ChangeLanguagePanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\ClubList.cs" />
+     <Compile Include="Assets\Scripts\GUI\CoachActivities_Panel.cs" />
+     <Compile Include="Assets\Scripts\GUI\CoachFeedbacks_Panel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Coach_LeftPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Coach_MainMenu_Panel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Feedback_InfoPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\GUI_module.cs" />
+     <Compile Include="Assets\Scripts\GUI\GUI_module_capture_coach.cs" />
+     <Compile Include="Assets\Scripts\GUI\GUI_module_capture_play_workshop.cs" />
+     <Compile Include="Assets\Scripts\GUI\GUI_module_initialization.cs" />
+     <Compile Include="Assets\Scripts\GUI\HeroeList.cs" />
+     <Compile Include="Assets\Scripts\GUI\Lang.cs" />
+     <Compile Include="Assets\Scripts\GUI\LoginPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\Child_ChangeLanguagePanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\Child_DisciplineList.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\Child_HeroeList.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\Child_LeftPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\Child_MainMenu_Panel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\Child_ModalityList.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\Child_SkillList.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\GUI_module_play_and_learn.cs" />
+     <Compile Include="Assets\Scripts\GUI\Play_and_Learn\Preferences_ChildPersonalDataPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\PlayerActivities.cs" />
+     <Compile Include="Assets\Scripts\GUI\PlayerList.cs" />
+     <Compile Include="Assets\Scripts\GUI\PlayerStatistics.cs" />
+     <Compile Include="Assets\Scripts\GUI\Player_ActivitiesPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Player_FeedbacksPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Player_InfoPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Player_PersonalData.cs" />
+     <Compile Include="Assets\Scripts\GUI\Preferences_ChangePasswordPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\Preferences_PersonalDataPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\ReturnKeyTriggersButton.cs" />
+     <Compile Include="Assets\Scripts\GUI\SkillList.cs" />
+     <Compile Include="Assets\Scripts\GUI\SkillPanel.cs" />
+     <Compile Include="Assets\Scripts\GUI\TabNavigation.cs" />
+     <Compile Include="Assets\Scripts\GUI\TeamList.cs" />
+     <Compile Include="Assets\Scripts\GUI\TiltWindow.cs" />
+     <Compile Include="Assets\Scripts\Interact\Interaction_module.cs" />
+     <Compile Include="Assets\Scripts\Scenario\C_a_T_Login.cs" />
+     <Compile Include="Assets\Scripts\Scenario\Coach_and_train_scenario.cs" />
+     <Compile Include="Assets\Scripts\Scenario\Coach_and_train_scenario_capture.cs" />
+     <Compile Include="Assets\Scripts\Scenario\Coach_and_train_scenario_initialization.cs" />
+     <Compile Include="Assets\Scripts\Scenario\Interact_and_preserve_scenario.cs" />
+     <Compile Include="Assets\Scripts\Scenario\Play_and_learn_scenario.cs" />
+     <Compile Include="Assets\Scripts\Scenario\Play_and_learn_scenario_workshop.cs" />
+     <Compile Include="Assets\Scripts\Scenario\Test_scenario.cs" />
+     <Compile Include="Assets\Scripts\Scenario\test_record_apply_anim_avatar.cs" />
+     <Compile Include="Assets\Scripts\Skeleton\Animation_data.cs" />
+     <Compile Include="Assets\Scripts\Skeleton\HBP.cs" />
+     <Compile Include="Assets\Scripts\Skeleton\ISkeletonGenerator.cs" />
+     <Compile Include="Assets\Scripts\Skeleton\TextExporting.cs" />
+     <Compile Include="Assets\Scripts\User\User_module.cs" />
+     <Compile Include="Assets\TextureScale.cs" />
+     <Compile Include="Assets\VideoExporter.cs" />
+     <Compile Include="Assets\WiMuPlotter.cs" />
+     <None Include="Assets\Resources\Kinect2\Paths.txt" />
+     <None Include="Assets\Standard Assets\Tessellation Shaders\BumpedSpecularSmooth.shader" />
+     <None Include="Assets\Resources\Kinect2\Timings.txt" />
+     <None Include="Assets\Resources\lang.xml" />
+     <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
+     <None Include="Assets\Resources\Kinect2\README.txt" />
+     <None Include="Assets\Resources\Kinect2\Networking.txt" />
+     <None Include="Assets\Standard Assets\Tessellation Shaders\BumpedSpecularDisplacement.shader" />
+     <None Include="Assets\plugins\protobuf-net.xml" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="FileHelpers">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/FileHelpers.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.Data.Sqlite">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Mono.Data.Sqlite.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.Data.SqliteClient">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Mono.Data.SqliteClient.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="protobuf-net">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/protobuf-net.dll</HintPath>
+ </Reference>
+ <Reference Include="Stateless35">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Stateless35.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Configuration">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.Configuration.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Data">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.Data.dll</HintPath>
+ </Reference>
+ <Reference Include="System.EnterpriseServices">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.EnterpriseServices.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Security">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.Security.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Windows.Forms">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.Windows.Forms.dll</HintPath>
+ </Reference>
+ <Reference Include="Vcl.Comparison">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Vcl.Comparison.dll</HintPath>
+ </Reference>
+ <Reference Include="Vcl.Utilities">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Vcl.Utilities.dll</HintPath>
+ </Reference>
+ <Reference Include="ZedGraph">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/ZedGraph.dll</HintPath>
+ </Reference>
+ <Reference Include="ShimmerConnect">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/Resources/ShimmerConnect.dll</HintPath>
+ </Reference>
+ <Reference Include="ICSharpCode.SharpZipLib">
+ <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/Scripts/Animate/KinectScripts/SharpZipLib/ICSharpCode.SharpZipLib.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{A1EF2F7E-CEBA-0C75-E7C6-BFC4913454B1}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

@@ -1,0 +1,30 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerExporting.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Capture\Fusion\FusedSkeleton_Main.cs" Line="10" Column="3" />
+      <File FileName="Assets\Scripts\Capture\Fusion\FusedSkeleton_FromFile.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\MahonyAHRS.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ModalityManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\RecordingManaging.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerControlling.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerExporting.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerManaging.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerReceiving.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerRecording.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerSending.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ModalityRecording.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\Shimmer\ShimmerSettings.cs" Line="1" Column="1" />
+      <File FileName="..\Repository\NEW NEW REPO\Unity_RePlay\RePlay_platform\Assets\Scripts\Capture\Fusion\Shimmer\ShimmerManaging.cs" Line="1" Column="1" />
+      <File FileName="Assets\Components\VclKinectBridge\Frames.cs" Line="24" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Kinect2\Local\Kinect2Controlling.cs" Line="108" Column="1" />
+      <File FileName="Assets\Components\Utilities.cs" Line="214" Column="3" />
+      <File FileName="Assets\Scripts\Scenario\Play_and_learn_scenario_workshop.cs" Line="71" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Fusion\FusionExporting.cs" Line="16" Column="21" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

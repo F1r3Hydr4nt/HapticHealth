@@ -1,0 +1,19 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Capture\Fusion\FusedSkeleton_Main.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Capture\Kinect1\KinectWrapper\KinectOneRecorder.cs" Line="43" Column="4" />
+      <File FileName="Assets\Scripts\Capture\Fusion\FusedSkeleton_Main.cs" Line="816" Column="38" />
+      <File FileName="Assets\Scripts\Capture\Kinect1\KinectWrapper\KinectOneInterop.cs" Line="22" Column="3" />
+      <File FileName="Assets\Scripts\Capture\Kinect1\KinectWrapper\KinectOneSensor.cs" Line="174" Column="5" />
+      <File FileName="Assets\Scripts\Capture\Fusion\FusionReader.cs" Line="36" Column="60" />
+      <File FileName="Assets\Scripts\Capture\Fusion\FusionExporting.cs" Line="57" Column="21" />
+      <File FileName="Assets\Scripts\Capture\Fusion\FusedSkeleton_FromFile.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capture\Kinect1\KinectWrapper\KinectOneEmulator.cs" Line="18" Column="16" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

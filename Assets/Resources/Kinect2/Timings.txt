@@ -1,0 +1,3 @@
+ConnectionPollingTime 1
+FileTransferPollingTime 1
+ProcessWaitSeconds 2
