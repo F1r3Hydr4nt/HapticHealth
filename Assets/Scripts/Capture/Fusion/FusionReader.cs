@@ -27,13 +27,13 @@ internal sealed class FusionReader
 	bool reading = true;
 	StreamReader reader;
 	ScanFormatted scanner;
-
+	
 	public FusionReader( string filename )
 	{
 		recordFile = filename;
-
+		
 		// Reading file...
-		Console.Important("Ready to read '" + recordFile + "'.");
+		//Console.Important("Ready to read '" + recordFile + "'.");
 		reader = new StreamReader( recordFile );
 		if (reader == null)
 		{
@@ -43,7 +43,7 @@ internal sealed class FusionReader
 		PassHeader ();
 		scanner = new ScanFormatted();
 	}
-
+	
 	// Simple joint / orientation structure
 	/*
 		    0		SpineBase
@@ -74,7 +74,7 @@ internal sealed class FusionReader
         */
 	public Vector3 [] jointPositions = new Vector3[ 25 ];
 	public Quaternion [] jointOrientations = new Quaternion[ 25 ];
-	public int currentTimeStamp = 0;		
+	public int currentTimeStamp = 0;
 	public int lastTimeStamp = 0;
 	public void UpdateNextFrame() 
 	{
@@ -82,19 +82,19 @@ internal sealed class FusionReader
 		{
 			// Pass the first data
 			string temp = reader.ReadLine();
-			Console.Log("file : "+reader.ReadToEnd());
-			// Parse the timestamp			
-			scanner.Parse(temp, "Frame %d %d %d %f %f %f %f");		
-			object [] _results = scanner.Results.ToArray();		
-			if (_results.Length == 7)		
-			{		
-				lastTimeStamp = currentTimeStamp;		
-				currentTimeStamp = (int) _results[ 1 ];		
+			
+			// Parse the timestamp	
+			scanner.Parse(temp, "Frame %d %d %d %f %f %f %f");
+			object [] _results = scanner.Results.ToArray();
+			if (_results.Length == 7)
+			{
+				lastTimeStamp = currentTimeStamp;
+				currentTimeStamp = (int) _results[ 1 ];
 			}
-
+			
 			temp = reader.ReadLine();
 			temp = reader.ReadLine();
-
+			
 			// Read and parse the joints
 			for(int i = 0; i < 25; ++i)
 			{
@@ -113,7 +113,7 @@ internal sealed class FusionReader
 						jointOrientations[i].y = (float)results[5]; 
 						jointOrientations[i].z = (float)results[6]; 
 						jointOrientations[i].w = (float)results[7]; 
-
+						
 						//Console.Log(i + ">> Read " + jointPositions[i].ToString() + " / " + jointOrientations[i].ToString());
 					}
 					else
@@ -122,10 +122,8 @@ internal sealed class FusionReader
 					}
 				}
 				else
-				// Go on to the begining
+					// Go on to the begining
 				{
-				Console.Log("line = "+line.ToString());
-					startTime = Time.time;
 					Console.Log("Reader rewinding the file.");
 					reader.BaseStream.Position = 0;
 					reader.DiscardBufferedData();
@@ -135,7 +133,7 @@ internal sealed class FusionReader
 			}
 		}
 	}
-
+	
 	// Go on until data
 	public const int headernumLine = 37;
 	private void PassHeader()
@@ -145,25 +143,13 @@ internal sealed class FusionReader
 			string line = reader.ReadLine();
 		}
 	}
-
+	
 	public void Start_Reading()
 	{
-		Tick ();
-		startTime = Time.time;
 		Console.Important ("Reading a recorded file.");
 		reading = true;
 	}
-	System.Diagnostics.Stopwatch stopwatch;
-	void Tick(){
-		stopwatch = System.Diagnostics.Stopwatch.StartNew ();
-	}
-	long stopWatchMilliseconds = 0;
-	void Tock(){
-		stopWatchMilliseconds = stopwatch.ElapsedMilliseconds;
-		Console.Log ("FusionReader/Playback time: "+stopwatch.Elapsed);
-	}
 	
-	float startTime = 0f;
 	public void Stop_Reading()
 	{
 		Console.Important ("Stop reading a recorded file.");

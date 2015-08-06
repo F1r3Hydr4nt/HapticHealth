@@ -11,16 +11,14 @@ using Fusion;
 using KinectOne;
 
 public class FusedSkeleton_FromFile : MonoBehaviour {
-
+	
 	// Reading and Rendering
 	public static string recordDirectory = @"CoachAndTrain\";
 	public static string recordFile = recordDirectory + @"tmp.sklxt";//@"\tmp-fusion.sklxt";
-	private FusionReader reader;// = new FusionReader( recordFile );
-	public GameObject fusedViewPrefab;
-	public BodySourceView sourceView;
-	private BodyFusedView fusedView;
+	private FusionReader reader = new FusionReader( recordFile );
+	public BodyFusedView fusedView;
 	private SkeletonFrame currentFrame;
-
+	
 	void OnDestroy() {
 		
 		// Put back the color
@@ -29,53 +27,26 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		reader = new FusionReader (recordFile);
 	}
-
+	
 	void Awake() {
 		Console.Important ("Start reading '" + recordFile + "'.");
-		fusedView = ((GameObject)GameObject.Instantiate (fusedViewPrefab)).GetComponent<BodyFusedView>();
+		
 		// Color
-		fusedView.sourceView = sourceView;
 		fusedView.SetOffMaterial ();
-		//fusedView.Awake ();
+		fusedView.Awake ();
 		fusedView.enableRendering ();
-		reader = new FusionReader (recordFile);
 		reader.Start_Reading ();
 	}
-	float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
-	int lastUpdateTime = 0;
 	
-	float totalTime =0f;
-	public void StartPlayback () {
-			lastUpdateTime = Environment.TickCount;
-	}
-	void Update(){	
-				int currentTimeMilliseconds = Environment.TickCount;
-				int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
-				//if we have gone over the required elapsed Time
-				if (timeElapsed >= fixedFrameTime) {
-					//				print (timeElapsed+" "+fixedFrameTime);
-					//Take a frame
-					
-					// Update the renderer
-					UpdateJoints ();
+	// Each frame
+	void Update () {
 		
-					//how far past the required time have we gotten?
-					int overflow = (int)(timeElapsed % fixedFrameTime);
-					
-					if (overflow > fixedFrameTime) {
-						print ("Skipping a frame here in fused skeleton");
-						Debug.Break ();
-					}
-					
-					int correctedLastUpdateTime = currentTimeMilliseconds - overflow;
-					
-					//set the last Update time as the time now minus the overlap of the delta
-					lastUpdateTime = correctedLastUpdateTime;
-				}
+		// Update the renderer
+		UpdateJoints ();
 	}
-
-		
+	
 	// Kinect skeleton JointType / relative index
 	Dictionary< int, JointType > KinectJoints = new Dictionary< int, JointType> ()	{
 		{ 0, JointType.SpineBase } ,
@@ -104,18 +75,19 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		{ 23, JointType.HandTipRight } ,
 		{ 24, JointType.ThumbRight } 
 	};
-
+	
+	//------------------------------------
 	// Kinect 1
 	//public DeviceOrEmulator emulator;
 	//NuiSkeletonFrame frame;
 	//------------------------------------
-
+	
 	// Update the rendering with the latest frame read
 	int skipFrame = 0;
 	const int skipNum = 0;
 	long currentTime = 0, lastTime = 0, elapsed = 0;
 	private void UpdateJoints() {
-
+		
 		// Slow motion
 		if (skipFrame < skipNum)
 		{
@@ -124,7 +96,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		}
 		else
 			skipFrame = 0;
-
+		
 		//--------------------------
 		// Kinect 1
 		// Get new frame from Kinect 1
@@ -168,18 +140,19 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		return;
 		*/
 		//--------------------------
-		// Timestamp based timing		
-		double time = (reader.currentTimeStamp - reader.lastTimeStamp);		
-		lastTime = currentTime;		
-		currentTime = DateTime.Now.Ticks;		
-		elapsed += currentTime - lastTime; //Time.deltaTime * 1000;		
-		if (reader.lastTimeStamp > 0 && elapsed < time) 		
-			return;		
+		
+		// Timestamp based timing
+		double time = (reader.currentTimeStamp - reader.lastTimeStamp);
+		lastTime = currentTime;
+		currentTime = DateTime.Now.Ticks;
+		elapsed += currentTime - lastTime; //Time.deltaTime * 1000;
+		if (reader.lastTimeStamp > 0 && elapsed < time) 
+			return;
 		elapsed = 0;
-
+		
 		// Get the next frame
 		reader.UpdateNextFrame ();
-
+		
 		// Update the skeleton
 		for (int i = 0; i < 25; ++i ) {
 			fusedView.SetJointPosition( KinectJoints[ i ], reader.jointPositions[ i ] );

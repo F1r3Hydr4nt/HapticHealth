@@ -20,13 +20,13 @@ public class WiMuPlotter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (fusedSkeleton.WimusOnline) {
-			PlotManager.Instance.PlotAdd ("0", Mathf.Abs(fusedSkeleton.totalMagnitudes [0]));
-			PlotManager.Instance.PlotAdd ("1", Mathf.Abs(fusedSkeleton.totalMagnitudes [1]));
-		} else {
+//		if (fusedSkeleton.WimusOnline) {
+		//	PlotManager.Instance.PlotAdd ("0", Mathf.Abs(fusedSkeleton.totalMagnitudes [0]));
+		//	PlotManager.Instance.PlotAdd ("1", Mathf.Abs(fusedSkeleton.totalMagnitudes [1]));
+	//	} else {
 			//PlotManager.Instance.PlotAdd ("0", 0);
 			//PlotManager.Instance.PlotAdd ("1", 0);
 
-		}
+	//	}
 	}
 }

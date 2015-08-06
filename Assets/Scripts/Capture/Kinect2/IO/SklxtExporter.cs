@@ -18,7 +18,7 @@ using FileHelpers.MasterDetail;
 #endregion
 namespace Kinect2.IO
 {
-	public sealed class SklxtWriter
+	internal sealed class SklxtWriter
 	{
 		#region Constructors
 		private SklxtWriter()
@@ -94,13 +94,13 @@ namespace Kinect2.IO
 			//get { return this.writer.BaseStream.CanWrite; }
 			get { return true; }
 		}
-
+		
 		public bool Start()
 		{
 			this.stopped = false;
 			return !this.stopped;
 		}
-
+		
 		public bool Write(SkeletonFrame frame)
 		{
 			bool success = false;
@@ -109,21 +109,17 @@ namespace Kinect2.IO
 				if (!this.stopped && (success = !frame.IsEmpty) 
 				    && frame.RelativeTime.Ticks != this.previous.RelativeTime.Ticks)
 				{
-//					Console.Log (frame);
 					this.writeableBlock.Add(this.FrameToMasterDetail(frame));
 					this.initialTimestamp = this.initialTimestamp == 0 ? frame.RelativeTime.Ticks : this.initialTimestamp;
 					this.previous = frame;
 					if (this.writeableBlock.Count == BlockBufferSize)
 					{
-						Console.Log("Writing frame");
 						this.totalWrittenFrames += this.writeableBlock.Count;
 						this.engine.WriteStream(this.writer, this.writeableBlock.ToArray());
 						this.writeableBlock.Clear();
 					}
 				}
 			}
-			//if(success)Console.Log("Wrote frame successfully "+totalWrittenFrames);
-		//	else Console.Log("Frame locked");
 			return success;
 		}
 		
@@ -168,9 +164,9 @@ namespace Kinect2.IO
 		private IDisposable unsubscriber;
 		
 		private long initialTimestamp;
-		public int totalWrittenFrames;
+		private int totalWrittenFrames;
 		private bool stopped;
-		public string filename;
+		private string filename;
 		//private readonly static string frameDelimiter = "\t";
 		//private readonly static string skeletonDelimiter = "\t";
 		private const string FrameSpecifier = "Frame";

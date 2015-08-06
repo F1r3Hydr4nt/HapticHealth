@@ -17,7 +17,6 @@ using Windows.Kinect;
 using FileHelpers;
 
 using Kinect2.IO;
-using System.Collections.Generic;
 
 using Floor = Windows.Kinect.Vector4;
 #endregion
@@ -30,15 +29,11 @@ namespace Kinect2.Local
 		public bool HasNewFrame { get; private set; }
 		public SkeletonFrame CurrentFrame { get { return new SkeletonFrame(this.frameNumber,
 				                                                                   this.bodies.Where((body) => body.IsTracked).ToArray(),this.currentFloor,this.currentTime); } }
-		public List<SkeletonFrame> RecordedFrames = new List<SkeletonFrame> ();// { get { return RecordedFrames; } set; }// new List<SkeletonFrame>();	
-		
-		//		public override List<SkeletonFrame> RecordedFrames{ get;}
 		#endregion
 		#region Unity
 		void Awake()
 		{
 			this.exporter = this.gameObject.AddComponent<SkeletonExporting>();
-			RecordedFrames = new List<SkeletonFrame> ();
 		}
 		
 		void Start () 
@@ -54,8 +49,7 @@ namespace Kinect2.Local
 					this.currentTime = frame.RelativeTime;
 					this.currentFloor = frame.FloorClipPlane;
 					this.currentBodyCount = frame.BodyCount;
-					frame.GetAndRefreshBodyData(this.bodies);	
-					this.HasNewFrame = true;	
+					frame.GetAndRefreshBodyData(this.bodies);		
 				}
 			};
 		}
@@ -65,63 +59,30 @@ namespace Kinect2.Local
 			this.frameNumber = 0;
 		}
 		
-		float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
-		int lastUpdateTime = 0;
-		float elapsedTime = 0f;
-		float totalTime=0;
 		void Update () 
 		{
-			if (IsRecording) {
-				
-				int currentTimeMilliseconds = Environment.TickCount;
-				int elapsedTime = currentTimeMilliseconds - lastUpdateTime;
-				//if we have gone over the required elapsed Time
-				//print ("deltatime " + deltaTime +" interval "+intervalTime);
-				if (elapsedTime >= fixedFrameTime) {
-					//if (this.HasNewFrame) {			
-					if(this.HasNewFrame){
-					RecordedFrames.Add (CurrentFrame);
-						this.latestTime = this.currentTime;
-						++this.frameNumber;	
-						this.HasNewFrame = false;
-					}else {
-						if (RecordedFrames.Count > 0) {
-							print ("Copying a frame here in skeleton capturing");
-							this.latestTime = this.currentTime;
-							//Debug.Break ();
-							RecordedFrames.Add (RecordedFrames.Last ());
-							++this.frameNumber;	
-						}
-					}
-					int overflow = (int)(elapsedTime % fixedFrameTime);
-					totalTime += fixedFrameTime;
-					if (overflow > fixedFrameTime) {
-						print ("Skipping a frame here in player");
-						Debug.Break ();
-					}
-					//set the last Update time as the time now minus the overlap of the delta
-					lastUpdateTime = currentTimeMilliseconds - overflow;
-				}
+			var dt = this.currentTime - this.latestTime;
+			this.HasNewFrame = dt  > TimeSpan.Zero;
+			if(this.HasNewFrame)
+			{			
+				this.latestTime = this.currentTime;
+				++this.frameNumber;			
 			}
+			//Console.Log("New Skeleton Frame ? " + this.HasNewFrame + " " + new TimeSpan(dt.Ticks/10000).ToString());
+			//Console.ImportantIf(new TimeSpan(dt.Ticks/10000).TotalMilliseconds > 40.0f,"SKIPPED FRAME");
 		}
 		
 		void OnDestroy()
 		{
-			this.reader.Dispose();
+			if(reader != null)
+				reader.Dispose();
 		}
 		#endregion
 		#region IRecorder implementation
 		public override bool StartRecording ()
 		{
-			Tick ();
-			frameNumber = 0;
-			RecordedFrames.Clear ();
-			startTime = Time.time;
 			return this.exporter.enabled = true;
 		}
-		
-		float startTime = 0f;
-		float endTime = 0f;
 		
 		public override bool CanRecord { get { return this.exporter != null; } }
 		
@@ -131,29 +92,17 @@ namespace Kinect2.Local
 		#endregion
 		#region ICancellation implementation
 		public override bool CanStop { get { return this.exporter.enabled; } }
+		
 		public override bool Stop ()
 		{
-			Tock ();
 			this.exporter.enabled = false;
-			this.RecordingConfidence = this.exporter.Elapsed.FPS * 10000.0f / 33.0f;
-			fusedFilePlayback.gameObject.SetActive(true);
-			fusedFilePlayback.StartPlayback ();
-			Console.Important("Rec Conf = " + this.RecordingConfidence);
+			//this.RecordingConfidence = this.exporter.Elapsed.FPS * 10000.0f / 33.0f;
+			//Console.Important("Rec Conf = " + this.RecordingConfidence);
 			return !this.exporter.enabled;
-		}
-		public FusedSkeleton_FromFile fusedFilePlayback;
-		System.Diagnostics.Stopwatch stopwatch;
-		void Tick(){
-			stopwatch = System.Diagnostics.Stopwatch.StartNew ();
-		}
-		long stopWatchMilliseconds = 0;
-		void Tock(){
-			stopWatchMilliseconds = stopwatch.ElapsedMilliseconds;
-			print ("KinectCapturing time: "+stopwatch.Elapsed+" RecordedFrames# "+RecordedFrames.Count);
 		}
 		#endregion
 		#region Fields
-		public SkeletonExporting exporter;
+		private SkeletonExporting exporter;
 		private BodyFrameReader reader;
 		private Body[] bodies;
 		private BodyFrame current;

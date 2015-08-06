@@ -31,15 +31,15 @@ public sealed class FusionExporting : MonoBehaviour
 		this.outputDirectory = Path.Combine(Environment.CurrentDirectory,OutputSubDirectory);								
 		this.enabled = this.tracker != null && this.tracker.CanRecord;
 	}
-
+	
 	void Start ()
 	{
 	}
-
+	
 	void OnEnable()
 	{
 		var path = Path.Combine(this.outputDirectory,
-		                                     DateTime.UtcNow.ToString("yy-MM-dd-HH-mm-ss"));
+		                        DateTime.UtcNow.ToString("yy-MM-dd-HH-mm-ss"));
 		if(!Directory.Exists(path))
 		{
 			Directory.CreateDirectory(path);
@@ -49,34 +49,32 @@ public sealed class FusionExporting : MonoBehaviour
 		this.writer = SklxtWriter.Constructor.Start().New(this.Filename).Construct();
 		this.enabled = this.writer.Start();		
 	}
-
+	
 	void LateUpdate () 
 	{
-		//if(this.tracker.HasNewFrame)
-		//{
-		//	this.writer.Write(this.tracker.CurrentFrame);
-		//}
+		if(this.tracker.HasNewFrame)
+		{
+			this.writer.Write(this.tracker.CurrentFrame);
+		}
 	}
-
+	
 	void OnDisable()
 	{
 		if(this.writer != null && this.writer.CanWrite)
 		{
-			print ("Shite the fusion writer should have written: "+this.writer.totalWrittenFrames);
-			Debug.Break();
 			this.Elapsed = this.writer.Stop();
 		}
 	}
-
+	
 	void OnDestroy()
 	{
-
+		
 	}
-
+	
 	#endregion
 	#region Fields
 	private FusionCapturing tracker;
-	public SklxtWriter writer;
+	private SklxtWriter writer;
 	private string outputDirectory;
 	private const string DefaultFileName = "tmp-fusion.sklxt";
 	private const string OutputSubDirectory = "CoachAndTrain";
