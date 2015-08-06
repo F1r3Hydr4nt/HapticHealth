@@ -45,7 +45,7 @@ public sealed class FusionExporting : MonoBehaviour
 			Directory.CreateDirectory(path);
 		}
 		this.Filename = Path.Combine(path,DefaultFileName);
-		//Console.Important("FUSION EXPORTING @ " + this.Filename);
+		Console.Important("FUSION EXPORTING @ " + this.Filename);
 		this.writer = SklxtWriter.Constructor.Start().New(this.Filename).Construct();
 		this.enabled = this.writer.Start();		
 	}
@@ -62,6 +62,8 @@ public sealed class FusionExporting : MonoBehaviour
 	{
 		if(this.writer != null && this.writer.CanWrite)
 		{
+			print ("Shite the fusion writer should have written: "+this.writer.totalWrittenFrames);
+			Debug.Break();
 			this.Elapsed = this.writer.Stop();
 		}
 	}

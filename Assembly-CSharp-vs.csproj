@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{D0973743-B3E7-26E9-BB86-A9D647308D07}</ProjectGuid>
+	<ProjectGuid>{DD9F522B-699C-B492-5D84-F0045F2105EC}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -268,57 +268,57 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="FileHelpers">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/FileHelpers.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/FileHelpers.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Data.Sqlite">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Mono.Data.Sqlite.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/Mono.Data.Sqlite.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Data.SqliteClient">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Mono.Data.SqliteClient.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/Mono.Data.SqliteClient.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="protobuf-net">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/protobuf-net.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/protobuf-net.dll</HintPath>
  </Reference>
  <Reference Include="Stateless35">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Stateless35.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/Stateless35.dll</HintPath>
  </Reference>
  <Reference Include="System.Configuration">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.Configuration.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/System.Configuration.dll</HintPath>
  </Reference>
  <Reference Include="System.Data">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.Data.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/System.Data.dll</HintPath>
  </Reference>
  <Reference Include="System.EnterpriseServices">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.EnterpriseServices.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/System.EnterpriseServices.dll</HintPath>
  </Reference>
  <Reference Include="System.Security">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.Security.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/System.Security.dll</HintPath>
  </Reference>
  <Reference Include="System.Windows.Forms">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/System.Windows.Forms.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/System.Windows.Forms.dll</HintPath>
  </Reference>
  <Reference Include="Vcl.Comparison">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Vcl.Comparison.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/Vcl.Comparison.dll</HintPath>
  </Reference>
  <Reference Include="Vcl.Utilities">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/Vcl.Utilities.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/Vcl.Utilities.dll</HintPath>
  </Reference>
  <Reference Include="ZedGraph">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/plugins/ZedGraph.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/plugins/ZedGraph.dll</HintPath>
  </Reference>
  <Reference Include="ShimmerConnect">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/Resources/ShimmerConnect.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/Resources/ShimmerConnect.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>C:/Users/Freddie/Desktop/RePlay_platform - Record Kinect 1and2 - Without hands/Assets/Scripts/Animate/KinectScripts/SharpZipLib/ICSharpCode.SharpZipLib.dll</HintPath>
+ <HintPath>C:/Users/Freddie/Documents/HapticHealth/Assets/Scripts/Animate/KinectScripts/SharpZipLib/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{A1EF2F7E-CEBA-0C75-E7C6-BFC4913454B1}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{03D3D0AB-EA0A-8581-BE74-CAE463332A9D}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -109,17 +109,21 @@ namespace Kinect2.IO
 				if (!this.stopped && (success = !frame.IsEmpty) 
 				    && frame.RelativeTime.Ticks != this.previous.RelativeTime.Ticks)
 				{
+//					Console.Log (frame);
 					this.writeableBlock.Add(this.FrameToMasterDetail(frame));
 					this.initialTimestamp = this.initialTimestamp == 0 ? frame.RelativeTime.Ticks : this.initialTimestamp;
 					this.previous = frame;
 					if (this.writeableBlock.Count == BlockBufferSize)
 					{
+						Console.Log("Writing frame");
 						this.totalWrittenFrames += this.writeableBlock.Count;
 						this.engine.WriteStream(this.writer, this.writeableBlock.ToArray());
 						this.writeableBlock.Clear();
 					}
 				}
 			}
+			//if(success)Console.Log("Wrote frame successfully "+totalWrittenFrames);
+		//	else Console.Log("Frame locked");
 			return success;
 		}
 		
@@ -164,9 +168,9 @@ namespace Kinect2.IO
 		private IDisposable unsubscriber;
 		
 		private long initialTimestamp;
-		private int totalWrittenFrames;
+		public int totalWrittenFrames;
 		private bool stopped;
-		private string filename;
+		public string filename;
 		//private readonly static string frameDelimiter = "\t";
 		//private readonly static string skeletonDelimiter = "\t";
 		private const string FrameSpecifier = "Frame";

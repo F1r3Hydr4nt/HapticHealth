@@ -139,6 +139,8 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 				this.latestTime = this.currentTime;
 				++this.frameNumber;	
 				this.exporter.writer.Write(currentFrame);
+					//print("success"+currentFrame.Index);
+				//else print ("LOCKED"+ this.exporter.writer.filename);
 				//how far past the required time have we gotten?
 				int overflow = (int)(timeElapsed % fixedFrameTime);
 			
@@ -208,6 +210,7 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 	public override bool Stop ()
 	{
 		this.exporter.enabled = false;
+	
 		//this.RecordingConfidence = this.exporter.Elapsed.FPS * 10000.0f / 33.0f;
 		//Console.Important("Rec Conf = " + this.RecordingConfidence);
 		return !this.exporter.enabled;
