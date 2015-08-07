@@ -126,6 +126,9 @@ internal sealed class FusionReader
 				{
 //				Console.Log("line = "+line.ToString());
 					startTime = Time.time;
+					
+					Tock ();
+					Tick ();
 					//Console.Log("Reader rewinding the file.");
 					reader.BaseStream.Position = 0;
 					reader.DiscardBufferedData();

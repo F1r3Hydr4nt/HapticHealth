@@ -66,7 +66,7 @@ public class KinectVideoRecorder : MonoBehaviour {
 	public Texture2D testTexture;
 
 	public static int fps = 20;
-	float fixedFrameTime = 1000f / (float)fps;
+	public static float fixedFrameTime = 1000f / (float)fps;
 	int lastUpdateTime = 0;
 	float downSamplingFactor = 0.001f;
 	void AddScaledTexture (Texture2D textureCopy)
@@ -78,6 +78,15 @@ public class KinectVideoRecorder : MonoBehaviour {
 
 	void Update(){
 		
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			fps --;
+			fixedFrameTime = 1000f / (float)fps;
+				}
+		
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			fps++;
+			fixedFrameTime = 1000f / (float)fps;
+				}
 		if (Input.GetKeyDown (KeyCode.A)) {
 			if(isRecording){
 				StopRecording();

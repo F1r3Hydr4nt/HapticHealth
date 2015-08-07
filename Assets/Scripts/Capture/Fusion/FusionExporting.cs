@@ -48,7 +48,9 @@ public sealed class FusionExporting : MonoBehaviour
 		Console.Important("FUSION EXPORTING @ " + this.Filename);
 		this.writer = SklxtWriter.Constructor.Start().New(this.Filename).Construct();
 		this.enabled = this.writer.Start();		
+		Tick ();
 		this.writer.Write(this.tracker.CurrentFrame);
+		totalFramesWritten++;
 	}
 
 	void LateUpdate () 
@@ -58,7 +60,15 @@ public sealed class FusionExporting : MonoBehaviour
 		//	this.writer.Write(this.tracker.CurrentFrame);
 		//}
 	}
-	
+	System.Diagnostics.Stopwatch stopwatch;
+	void Tick(){
+		stopwatch = System.Diagnostics.Stopwatch.StartNew ();
+	}
+	long stopWatchMilliseconds = 0;
+	void Tock(){
+		stopWatchMilliseconds = stopwatch.ElapsedMilliseconds;
+		print ("FusionExporting time: "+stopwatch.Elapsed+" RecordedFrames# "+totalFramesWritten);
+	}
 	
 	float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
 	int lastUpdateTime = 0;
@@ -93,9 +103,10 @@ public sealed class FusionExporting : MonoBehaviour
 	{
 		if(this.writer != null && this.writer.CanWrite)
 		{
-			print ("FusionExporting wrote "+totalFramesWritten);
+			//print ("FusionExporting wrote "+totalFramesWritten);
 			//Debug.Break();
 			this.Elapsed = this.writer.Stop();
+			Tock ();
 		}
 	}
 

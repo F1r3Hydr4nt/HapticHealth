@@ -181,7 +181,7 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 	}
 	public bool StartRecording( TimeSpan _currentTime, Windows.Kinect.Vector4 _currentFloor )
 	{
-		Tick ();
+		//Tick ();
 		startTime = Time.time;
 		currentTime = _currentTime;
 		currentFloor = _currentFloor;
@@ -207,7 +207,7 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 	bool isRecording=false;
 	public void StopRecording()
 	{
-		Tock ();
+		//Tock ();
 		isRecording = false;
 		this.Stop();
 		this.LatestCapture = this.exporter.Filename;

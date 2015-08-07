@@ -38,13 +38,21 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		fusedView.sourceView = sourceView;
 		fusedView.SetOffMaterial ();
 		//fusedView.Awake ();
+		Tick ();
 		fusedView.enableRendering ();
 		reader = new FusionReader (recordFile);
 		reader.Start_Reading ();
 	}
-	float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
 	int lastUpdateTime = 0;
-	
+	System.Diagnostics.Stopwatch stopwatch;
+	void Tick(){
+		stopwatch = System.Diagnostics.Stopwatch.StartNew ();
+	}
+	long stopWatchMilliseconds = 0;
+	void Tock(){
+		stopWatchMilliseconds = stopwatch.ElapsedMilliseconds;
+		print ("Fusion Playback time: "+stopwatch.Elapsed);
+	}
 	float totalTime =0f;
 	public void StartPlayback () {
 			lastUpdateTime = Environment.TickCount;
@@ -53,7 +61,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 				int currentTimeMilliseconds = Environment.TickCount;
 				int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
 				//if we have gone over the required elapsed Time
-				if (timeElapsed >= fixedFrameTime) {
+		if (timeElapsed >= KinectVideoRecorder.fixedFrameTime) {
 					//				print (timeElapsed+" "+fixedFrameTime);
 					//Take a frame
 					
@@ -61,9 +69,9 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 					UpdateJoints ();
 		
 					//how far past the required time have we gotten?
-					int overflow = (int)(timeElapsed % fixedFrameTime);
+			int overflow = (int)(timeElapsed % KinectVideoRecorder.fixedFrameTime);
 					
-					if (overflow > fixedFrameTime) {
+			if (overflow > KinectVideoRecorder.fixedFrameTime) {
 						print ("Skipping a frame here in fused skeleton");
 						//Debug.Break ();
 					}

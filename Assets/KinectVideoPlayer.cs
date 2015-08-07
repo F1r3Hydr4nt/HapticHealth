@@ -25,7 +25,7 @@ public class KinectVideoPlayer : MonoBehaviour {
 		elapsedTime = 0f;
 		//UpdateFrame ();
 		isPlaying = true;
-		totalTime += fixedFrameTime;
+		totalTime += KinectVideoRecorder.fixedFrameTime;
 	}
 	public Texture2D testTexture;
 	public void StopPlayback () {
@@ -50,22 +50,19 @@ public class KinectVideoPlayer : MonoBehaviour {
 				gameObject.renderer.material.mainTexture = frame;
 			}
 		}
-		totalTime += fixedFrameTime;
+		totalTime += KinectVideoRecorder.fixedFrameTime;
 		//print ("UpdateFrame");
 		frame = frameTextures[currentFrame];
 		gameObject.renderer.material.mainTexture = frame;
 		//Old way
 		//frame.LoadImage(frames[currentFrame]);
 		currentFrame++;
-		Invoke ("UpdateFrame", fixedFrameTime * 0.001f);
-	}
-	public void SyncTime(int newFPS){
-		fixedFrameTime = 1000f / (float)newFPS;
+		Invoke ("UpdateFrame", KinectVideoRecorder.fixedFrameTime * 0.001f);
 	}
 	// Update is called once per frame
 	Texture2D frame;
 	public bool looping = true;
-	float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
+
 	int lastUpdateTime = 0;
 	float elapsedTime = 0f;
 	float totalTime=0;
@@ -107,7 +104,7 @@ public class KinectVideoPlayer : MonoBehaviour {
 			int elapsedTime = currentTimeMilliseconds - lastUpdateTime;
 			//if we have gone over the required elapsed Time
 			//print ("deltatime " + deltaTime +" interval "+intervalTime);
-			if(elapsedTime>=fixedFrameTime){
+			if(elapsedTime>=KinectVideoRecorder.fixedFrameTime){
 				frame = frameTextures[currentFrame];
 				gameObject.renderer.material.mainTexture = frame;
 				//Old way
@@ -127,9 +124,9 @@ public class KinectVideoPlayer : MonoBehaviour {
 						gameObject.renderer.material.mainTexture = frame;
 					}
 				}
-				int overflow = (int)(elapsedTime%fixedFrameTime);
-				totalTime+=fixedFrameTime;
-				if(overflow>fixedFrameTime){
+				int overflow = (int)(elapsedTime%KinectVideoRecorder.fixedFrameTime);
+				totalTime+=KinectVideoRecorder.fixedFrameTime;
+				if(overflow>KinectVideoRecorder.fixedFrameTime){
 					print ("Skipping a frame here in player");
 					//Debug.Break ();
 				}
