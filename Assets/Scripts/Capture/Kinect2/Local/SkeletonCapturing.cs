@@ -71,6 +71,7 @@ namespace Kinect2.Local
 		float totalTime=0;
 		void Update () 
 		{
+			/*
 			if (IsRecording) {
 				
 				int currentTimeMilliseconds = Environment.TickCount;
@@ -100,8 +101,15 @@ namespace Kinect2.Local
 						Debug.Break ();
 					}
 					//set the last Update time as the time now minus the overlap of the delta
-					lastUpdateTime = currentTimeMilliseconds - overflow;
 				}
+			}*/
+			
+			//currentTime = new TimeSpan (DateTime.Now.Ticks);
+			var dt = currentTime - latestTime;
+			this.HasNewFrame = dt > TimeSpan.Zero;
+			if (this.HasNewFrame) {
+				latestTime = currentTime;
+				++frameNumber;
 			}
 		}
 		

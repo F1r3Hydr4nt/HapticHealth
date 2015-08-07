@@ -82,7 +82,7 @@ internal sealed class FusionReader
 		{
 			// Pass the first data
 			string temp = reader.ReadLine();
-			Console.Log("file : "+reader.ReadToEnd());
+			//Console.Log("file : "+reader.ReadToEnd());
 			// Parse the timestamp			
 			scanner.Parse(temp, "Frame %d %d %d %f %f %f %f");		
 			object [] _results = scanner.Results.ToArray();		
@@ -124,9 +124,9 @@ internal sealed class FusionReader
 				else
 				// Go on to the begining
 				{
-				Console.Log("line = "+line.ToString());
+//				Console.Log("line = "+line.ToString());
 					startTime = Time.time;
-					Console.Log("Reader rewinding the file.");
+					//Console.Log("Reader rewinding the file.");
 					reader.BaseStream.Position = 0;
 					reader.DiscardBufferedData();
 					PassHeader();

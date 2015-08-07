@@ -120,7 +120,7 @@ public class KinectVideoRecorder : MonoBehaviour {
 				
 				if(overflow>fixedFrameTime){
 					print ("Skipping a frame here in recorder");
-					Debug.Break ();
+					//Debug.Break ();
 				}
 
 				int correctedLastUpdateTime = currentTimeMilliseconds - overflow;

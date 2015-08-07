@@ -52,10 +52,10 @@ public sealed class FusionExporting : MonoBehaviour
 
 	void LateUpdate () 
 	{
-		//if(this.tracker.HasNewFrame)
-		//{
-		//	this.writer.Write(this.tracker.CurrentFrame);
-		//}
+		if(this.tracker.HasNewFrame)
+		{
+			this.writer.Write(this.tracker.CurrentFrame);
+		}
 	}
 
 	void OnDisable()
@@ -63,7 +63,7 @@ public sealed class FusionExporting : MonoBehaviour
 		if(this.writer != null && this.writer.CanWrite)
 		{
 			print ("Shite the fusion writer should have written: "+this.writer.totalWrittenFrames);
-			Debug.Break();
+			//Debug.Break();
 			this.Elapsed = this.writer.Stop();
 		}
 	}

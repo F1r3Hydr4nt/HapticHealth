@@ -131,7 +131,7 @@ public class KinectVideoPlayer : MonoBehaviour {
 				totalTime+=fixedFrameTime;
 				if(overflow>fixedFrameTime){
 					print ("Skipping a frame here in player");
-					Debug.Break ();
+					//Debug.Break ();
 				}
 				//set the last Update time as the time now minus the overlap of the delta
 				lastUpdateTime = currentTimeMilliseconds-overflow;

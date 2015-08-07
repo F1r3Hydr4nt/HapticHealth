@@ -50,7 +50,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 			lastUpdateTime = Environment.TickCount;
 	}
 	void Update(){	
-				int currentTimeMilliseconds = Environment.TickCount;
+				/*int currentTimeMilliseconds = Environment.TickCount;
 				int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
 				//if we have gone over the required elapsed Time
 				if (timeElapsed >= fixedFrameTime) {
@@ -65,14 +65,15 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 					
 					if (overflow > fixedFrameTime) {
 						print ("Skipping a frame here in fused skeleton");
-						Debug.Break ();
+						//Debug.Break ();
 					}
 					
 					int correctedLastUpdateTime = currentTimeMilliseconds - overflow;
 					
 					//set the last Update time as the time now minus the overlap of the delta
 					lastUpdateTime = correctedLastUpdateTime;
-				}
+				}*/
+		UpdateJoints ();
 	}
 
 		
