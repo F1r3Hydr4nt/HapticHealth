@@ -125,7 +125,7 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 	float totalTime =0f;
 
 	void Update(){	
-		
+		/*
 			if (isRecording) {
 				
 			int currentTimeMilliseconds = Environment.TickCount;
@@ -154,7 +154,15 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 				//set the last Update time as the time now minus the overlap of the delta
 				lastUpdateTime = correctedLastUpdateTime;
 			}
+		}*/
+		currentTime = new TimeSpan (DateTime.Now.Ticks);
+		var dt = currentTime - latestTime;
+		this.HasNewFrame = dt > TimeSpan.Zero;
+		if (this.HasNewFrame) {
+			latestTime = currentTime;
+			++frameNumber;
 		}
+
 	}
 
 
