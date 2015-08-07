@@ -48,21 +48,52 @@ public sealed class FusionExporting : MonoBehaviour
 		Console.Important("FUSION EXPORTING @ " + this.Filename);
 		this.writer = SklxtWriter.Constructor.Start().New(this.Filename).Construct();
 		this.enabled = this.writer.Start();		
+		this.writer.Write(this.tracker.CurrentFrame);
 	}
 
 	void LateUpdate () 
 	{
-		if(this.tracker.HasNewFrame)
-		{
-			this.writer.Write(this.tracker.CurrentFrame);
-		}
+		//if(this.tracker.HasNewFrame)
+		//{
+		//	this.writer.Write(this.tracker.CurrentFrame);
+		//}
 	}
+	
+	
+	float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
+	int lastUpdateTime = 0;
+	float elapsedTime = 0f;
+	float totalTime=0;
 
+	void Update(){
+		if (tracker.IsRecording) {
+			
+			int currentTimeMilliseconds = Environment.TickCount;
+			int elapsedTime = currentTimeMilliseconds - lastUpdateTime;
+			//if we have gone over the required elapsed Time
+			//print ("deltatime " + deltaTime +" interval "+intervalTime);
+			if (elapsedTime >= fixedFrameTime) {
+				this.writer.Write(this.tracker.CurrentFrame);
+				totalFramesWritten++;
+				int overflow = (int)(elapsedTime % fixedFrameTime);
+				totalTime += fixedFrameTime;
+				if (overflow > fixedFrameTime) {
+					print ("Skipping a frame here in player");
+					Debug.Break ();
+				}
+				int correctedLastUpdateTime = currentTimeMilliseconds - overflow;
+				//set the last Update time as the time now minus the overlap of the delta
+				lastUpdateTime = correctedLastUpdateTime;
+			}
+		}
+
+	}
+	int totalFramesWritten = 0;
 	void OnDisable()
 	{
 		if(this.writer != null && this.writer.CanWrite)
 		{
-			print ("Shite the fusion writer should have written: "+this.writer.totalWrittenFrames);
+			print ("FusionExporting wrote "+totalFramesWritten);
 			//Debug.Break();
 			this.Elapsed = this.writer.Stop();
 		}

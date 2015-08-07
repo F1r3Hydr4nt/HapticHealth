@@ -125,20 +125,21 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 	float totalTime =0f;
 
 	void Update(){	
-		/*
-			if (isRecording) {
+
+			/*if (isRecording) {
 				
 			int currentTimeMilliseconds = Environment.TickCount;
 			int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
+			print ("Fusion Capturing, time elapsed "+timeElapsed+" >??? "+fixedFrameTime);
 			//if we have gone over the required elapsed Time
 			if (timeElapsed >= fixedFrameTime) {
 				//				print (timeElapsed+" "+fixedFrameTime);
 				//Take a frame
-			
+				this.HasNewFrame = true;
 				// Update the renderer
 				this.latestTime = this.currentTime;
 				++this.frameNumber;	
-				this.exporter.writer.Write(currentFrame);
+				//this.exporter.writer.Write(currentFrame);
 					//print("success"+currentFrame.Index);
 				//else print ("LOCKED"+ this.exporter.writer.filename);
 				//how far past the required time have we gotten?
@@ -146,7 +147,7 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 			
 				if (overflow > fixedFrameTime) {
 					print ("Skipping a frame here in fused skeleton");
-					Debug.Break ();
+					//Debug.Break ();
 				}
 			
 				int correctedLastUpdateTime = currentTimeMilliseconds - overflow;
@@ -155,14 +156,15 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 				lastUpdateTime = correctedLastUpdateTime;
 			}
 		}*/
-		currentTime = new TimeSpan (DateTime.Now.Ticks);
-		var dt = currentTime - latestTime;
-		this.HasNewFrame = dt > TimeSpan.Zero;
-		if (this.HasNewFrame) {
-			latestTime = currentTime;
-			++frameNumber;
-		}
-
+		if (isRecording) {
+						currentTime = new TimeSpan (DateTime.Now.Ticks);
+						var dt = currentTime - latestTime;
+						this.HasNewFrame = dt > TimeSpan.Zero;
+						if (this.HasNewFrame) {
+								latestTime = currentTime;
+								++frameNumber;
+						}
+				}
 	}
 
 

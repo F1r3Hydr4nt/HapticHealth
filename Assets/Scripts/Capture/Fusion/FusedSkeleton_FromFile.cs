@@ -50,7 +50,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 			lastUpdateTime = Environment.TickCount;
 	}
 	void Update(){	
-				/*int currentTimeMilliseconds = Environment.TickCount;
+				int currentTimeMilliseconds = Environment.TickCount;
 				int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
 				//if we have gone over the required elapsed Time
 				if (timeElapsed >= fixedFrameTime) {
@@ -72,8 +72,8 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 					
 					//set the last Update time as the time now minus the overlap of the delta
 					lastUpdateTime = correctedLastUpdateTime;
-				}*/
-		UpdateJoints ();
+				}
+		//UpdateJoints ();
 	}
 
 		

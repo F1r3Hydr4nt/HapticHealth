@@ -115,7 +115,7 @@ namespace Kinect2.IO
 					this.previous = frame;
 					if (this.writeableBlock.Count == BlockBufferSize)
 					{
-						Console.Log("Writing frame");
+						//Console.Log("Writing frame");
 						this.totalWrittenFrames += this.writeableBlock.Count;
 						this.engine.WriteStream(this.writer, this.writeableBlock.ToArray());
 						this.writeableBlock.Clear();
