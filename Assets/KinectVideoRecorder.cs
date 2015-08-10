@@ -19,7 +19,7 @@ public class KinectVideoRecorder : MonoBehaviour {
 
 	float videoRecordTime = 3f;
 	
-	void StartRecording ()
+	public void StartRecording ()
 	{
 		Tick ();
 		videoFrames = new List<byte[]> ();
@@ -42,7 +42,7 @@ public class KinectVideoRecorder : MonoBehaviour {
 	float elapsedTime;
 	int startTime;
 	
-	void StopRecording ()
+	public void StopRecording ()
 	{
 		print (TimeSpan.FromMilliseconds(totalTime).ToString() + "s");
 		Tock ();
@@ -87,14 +87,6 @@ public class KinectVideoRecorder : MonoBehaviour {
 			fps++;
 			fixedFrameTime = 1000f / (float)fps;
 				}
-		if (Input.GetKeyDown (KeyCode.A)) {
-			if(isRecording){
-				StopRecording();
-			}
-			else {
-				StartRecording();
-			}
-		}
 		if (isRecording) {
 			/*elapsedTime += Time.deltaTime;
 			//print (elapsedTime +" "+fixedFrameTime);

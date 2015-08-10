@@ -157,7 +157,7 @@ namespace Kinect2.Local
 		long stopWatchMilliseconds = 0;
 		void Tock(){
 			stopWatchMilliseconds = stopwatch.ElapsedMilliseconds;
-			print ("KinectCapturing time: "+stopwatch.Elapsed+" RecordedFrames# "+RecordedFrames.Count);
+//			print ("KinectCapturing time: "+stopwatch.Elapsed+" RecordedFrames# "+RecordedFrames.Count);
 		}
 		#endregion
 		#region Fields

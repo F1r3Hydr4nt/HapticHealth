@@ -497,43 +497,6 @@ namespace Fusion
 				if(fusionCapturer.IsRecording)
 				{
 					fusionCapturer.UpdateCurrentFrame (fusionJoints);
-				
-					// Stop
-					if(Input.GetKeyDown(KeyCode.A) && isRecording)
-					{
-						print ("Stop Recording Fusion");
-						// Record from Ticks time
-						if(fusionCapturer.CanStop)
-							fusionCapturer.StopRecording();
-						Console.Important("<b><color=red>Fusion recording has stopped.</color></b>");
-
-						// Kinect capture
-						if(captureKinect && kinectCapturer.CanStop)
-						{
-							kinectCapturer.Stop();
-							Console.Important("<b><color=red>Kinect recording has stopped.</color></b>");
-						}
-						isRecording = false;
-					}
-				}
-				else
-				// Start
-					if(Input.GetKeyDown(KeyCode.A) && !isRecording)
-				{
-					print ("Start Recording Fusion");
-					// Record from Ticks time
-					fusionCapturer.StartRecording( kinectManager.CurrentTime, kinectManager.CurrentFloor );
-					Console.Important("<b><color=aqua>Fusion recording started.</color></b>");
-
-					// Kinect capture
-					if(captureKinect && kinectCapturer.CanRecord)
-					{
-						kinectCapturer.StartRecording();
-						Console.Important("<b><color=aqua>Kinect recording started.</color></b>");
-					}
-
-					isRecording = true;
-					
 				}
 			}
 
@@ -543,6 +506,39 @@ namespace Fusion
 				useKinectTracking = !useKinectTracking;
 			}
 		}	
+
+		public void StartRecording(){
+			print ("Start Recording Fusion");
+			// Record from Ticks time
+			fusionCapturer.StartRecording( kinectManager.CurrentTime, kinectManager.CurrentFloor );
+			Console.Important("<b><color=aqua>Fusion recording started.</color></b>");
+			
+			// Kinect capture
+			if(captureKinect && kinectCapturer.CanRecord)
+			{
+				kinectCapturer.StartRecording();
+				Console.Important("<b><color=aqua>Kinect recording started.</color></b>");
+			}
+			
+			isRecording = true;
+
+		}
+		public void StopRecording(){
+				print ("Stop Recording Fusion");
+				// Record from Ticks time
+				if(fusionCapturer.CanStop)
+					fusionCapturer.StopRecording();
+				Console.Important("<b><color=red>Fusion recording has stopped.</color></b>");
+				
+				// Kinect capture
+				if(captureKinect && kinectCapturer.CanStop)
+				{
+					kinectCapturer.Stop();
+					Console.Important("<b><color=red>Kinect recording has stopped.</color></b>");
+				}
+				isRecording = false;
+			}
+
 		bool isRecording = false;
 		// Get WIMUs calibration from the Kinect skeleton
 		private bool GetCalibration( bool kinect ) {
