@@ -55,7 +55,7 @@ interface IDevice
 	 Device Type { get; }
 }
 
-internal abstract class Capturer : MonoBehaviour,IDevice,IRecorder,ICancellation
+public abstract class Capturer : MonoBehaviour,IDevice,IRecorder,ICancellation
 {
 	public abstract Device Type { get; }
 

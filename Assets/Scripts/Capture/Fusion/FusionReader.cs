@@ -76,6 +76,25 @@ internal sealed class FusionReader
 	public Quaternion [] jointOrientations = new Quaternion[ 25 ];
 	public int currentTimeStamp = 0;		
 	public int lastTimeStamp = 0;
+	List<float[]>[] storedFrames;
+	public void ReadAllFrames (int count){
+
+	}
+	int frameToRead  = 0;
+	public void GetNextFrame(){
+		for (int i = 0; i<25; i++) {
+						jointPositions [i].x = (float)storedFrames[i] [frameToRead] [1];
+						jointPositions [i].y = (float)storedFrames[i] [frameToRead] [2];
+						jointPositions [i].z = (float)storedFrames[i] [frameToRead] [3];
+						jointOrientations [i].x = (float)storedFrames[i] [frameToRead] [4]; 
+						jointOrientations [i].y = (float)storedFrames[i] [frameToRead] [5]; 
+						jointOrientations [i].z = (float)storedFrames[i] [frameToRead] [6]; 
+						jointOrientations [i].w = (float)storedFrames[i] [frameToRead] [7]; 
+				}
+		frameToRead++;
+		if (frameToRead > storedFrames.Length)
+						frameToRead = 0;
+	}
 	public void UpdateNextFrame() 
 	{
 		if( reading && reader != null && scanner != null )

@@ -41,7 +41,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		Tick ();
 		fusedView.enableRendering ();
 		reader = new FusionReader (recordFile);
-		reader.Start_Reading ();
+		//reader.Start_Reading ();
 	}
 	int lastUpdateTime = 0;
 	System.Diagnostics.Stopwatch stopwatch;
@@ -54,7 +54,8 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		print ("Fusion Playback time: "+stopwatch.Elapsed);
 	}
 	float totalTime =0f;
-	public void StartPlayback () {
+	public void StartPlayback (int framesRecorded) {
+		reader.ReadAllFrames (framesRecorded);
 			lastUpdateTime = Environment.TickCount;
 	}
 	void Update(){	
@@ -124,7 +125,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 	const int skipNum = 0;
 	long currentTime = 0, lastTime = 0, elapsed = 0;
 	private void UpdateJoints() {
-
+		/*
 		// Slow motion
 		if (skipFrame < skipNum)
 		{
@@ -178,6 +179,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		*/
 		//--------------------------
 		// Timestamp based timing		
+		/*
 		double time = (reader.currentTimeStamp - reader.lastTimeStamp);		
 		lastTime = currentTime;		
 		currentTime = DateTime.Now.Ticks;		
@@ -185,10 +187,10 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		if (reader.lastTimeStamp > 0 && elapsed < time) 		
 			return;		
 		elapsed = 0;
-
+		*/
 		// Get the next frame
 		reader.UpdateNextFrame ();
-
+		//reader.GetNextFrame ();
 		// Update the skeleton
 		for (int i = 0; i < 25; ++i ) {
 			fusedView.SetJointPosition( KinectJoints[ i ], reader.jointPositions[ i ] );

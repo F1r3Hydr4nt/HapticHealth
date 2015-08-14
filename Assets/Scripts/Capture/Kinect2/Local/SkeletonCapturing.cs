@@ -144,12 +144,9 @@ namespace Kinect2.Local
 			Tock ();
 			this.exporter.enabled = false;
 			this.RecordingConfidence = this.exporter.Elapsed.FPS * 10000.0f / 33.0f;
-			fusedFilePlayback.gameObject.SetActive(true);
-			fusedFilePlayback.StartPlayback ();
 			Console.Important("Rec Conf = " + this.RecordingConfidence);
 			return !this.exporter.enabled;
 		}
-		public FusedSkeleton_FromFile fusedFilePlayback;
 		System.Diagnostics.Stopwatch stopwatch;
 		void Tick(){
 			stopwatch = System.Diagnostics.Stopwatch.StartNew ();

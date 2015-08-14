@@ -99,7 +99,7 @@ namespace Fusion
 		// Fused skeleton Exporter
 		public bool captureKinect = true;
 		private SkeletonCapturing kinectCapturer;
-		private FusionCapturing fusionCapturer;
+		public FusionCapturing fusionCapturer;
 
 		// Calibration time to get the Kinect skeleton
 		//private float delay = 2.0f;

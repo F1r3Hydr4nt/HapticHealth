@@ -18,7 +18,7 @@ using Kinect2.IO;
 using Floor = Windows.Kinect.Vector4;
 using Fusion;
 #endregion
-internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFrame>
+public class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFrame>
 {
 	#region Properties
 	public string LatestCapture { get; private set; }
@@ -213,7 +213,6 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 		this.LatestCapture = this.exporter.Filename;
 		print ("passing filename " + this.LatestCapture);
 		FusedSkeleton_FromFile.recordFile = LatestCapture;
-		videoPlayer.StartPlayback ();
 	}
 	public KinectVideoPlayer videoPlayer;
 	public override bool CanStop { get { return this.exporter.enabled; } }	
@@ -229,7 +228,7 @@ internal sealed class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFram
 	
 	float startTime = 0f;
 	#region Fields
-	private FusionExporting exporter;
+	public FusionExporting exporter;
 	private BodyFrameReader reader;
 	private Body[] bodies;
 	private BodyFrame current;

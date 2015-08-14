@@ -98,7 +98,7 @@ public sealed class FusionExporting : MonoBehaviour
 		}
 
 	}
-	int totalFramesWritten = 0;
+	public int totalFramesWritten = 0;
 	void OnDisable()
 	{
 		if(this.writer != null && this.writer.CanWrite)

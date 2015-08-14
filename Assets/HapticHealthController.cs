@@ -13,15 +13,33 @@ public class HapticHealthController : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.A)) {
 			if(!recording){
-				recording = true;
-				fusionSkeleton.StartRecording();
-				videoRecorder.StartRecording();
+				StartRecording();
 			}
 			else{
-				recording = false;
-				fusionSkeleton.StopRecording();
-				videoRecorder.StopRecording();
+				StopRecording();
 			}
 		}
+		if (Input.GetKeyDown (KeyCode.S)) {
+			PlaybackRecording();
+		}
+	}
+
+	void StartRecording(){
+		recording = true;
+		fusionSkeleton.StartRecording();
+		videoRecorder.StartRecording();
+	}
+
+	void StopRecording(){
+		recording = false;
+		fusionSkeleton.StopRecording();
+		videoRecorder.StopRecording();
+	}
+
+	void PlaybackRecording(){
+		
+		fusedSkeletonPlayback.gameObject.SetActive(true);
+		fusedSkeletonPlayback.StartPlayback (fusionSkeleton.fusionCapturer.exporter.totalFramesWritten);
+		videoPlayer.StartPlayback ();
 	}
 }
