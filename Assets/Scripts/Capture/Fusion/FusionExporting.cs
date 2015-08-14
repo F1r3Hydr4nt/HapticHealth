@@ -69,8 +69,7 @@ public sealed class FusionExporting : MonoBehaviour
 		stopWatchMilliseconds = stopwatch.ElapsedMilliseconds;
 		print ("FusionExporting time: "+stopwatch.Elapsed+" RecordedFrames# "+totalFramesWritten);
 	}
-	
-	float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
+
 	int lastUpdateTime = 0;
 	float elapsedTime = 0f;
 	float totalTime=0;
@@ -82,12 +81,12 @@ public sealed class FusionExporting : MonoBehaviour
 			int elapsedTime = currentTimeMilliseconds - lastUpdateTime;
 			//if we have gone over the required elapsed Time
 			//print ("deltatime " + deltaTime +" interval "+intervalTime);
-			if (elapsedTime >= fixedFrameTime) {
+			if (elapsedTime >= HapticHealthController.fixedFrameTimeRecording) {
 				this.writer.Write(this.tracker.CurrentFrame);
 				totalFramesWritten++;
-				int overflow = (int)(elapsedTime % fixedFrameTime);
-				totalTime += fixedFrameTime;
-				if (overflow > fixedFrameTime) {
+				int overflow = (int)(elapsedTime %  HapticHealthController.fixedFrameTimeRecording);
+				totalTime +=  HapticHealthController.fixedFrameTimeRecording;
+				if (overflow >  HapticHealthController.fixedFrameTimeRecording) {
 					print ("Skipping a frame here in player");
 					Debug.Break ();
 				}

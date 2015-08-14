@@ -23,9 +23,8 @@ public class KinectVideoPlayer : MonoBehaviour {
 		lastUpdateTime = startTime;
 		currentFrame = 0;
 		elapsedTime = 0f;
-		//UpdateFrame ();
 		isPlaying = true;
-		totalTime += KinectVideoRecorder.fixedFrameTime;
+		totalTime += HapticHealthController.fixedFrameTimePlayback;
 	}
 	public Texture2D testTexture;
 	public void StopPlayback () {
@@ -35,33 +34,10 @@ public class KinectVideoPlayer : MonoBehaviour {
 		currentFrame = 0;
 	}
 	int currentFrame = 0;
-	public void UpdateFrame(){
-		if(currentFrame>frameTextures.Count-1){
-			if(looping){
-				print (totalTime+"s");
-				totalTime = 0f;
-				Tock ();
-				Tick ();
-				currentFrame = 0;
-			}
-			else{
-				StopPlayback();
-				frame = new Texture2D(2,2);
-				gameObject.renderer.material.mainTexture = frame;
-			}
-		}
-		totalTime += KinectVideoRecorder.fixedFrameTime;
-		//print ("UpdateFrame");
-		frame = frameTextures[currentFrame];
-		gameObject.renderer.material.mainTexture = frame;
-		//Old way
-		//frame.LoadImage(frames[currentFrame]);
-		currentFrame++;
-		Invoke ("UpdateFrame", KinectVideoRecorder.fixedFrameTime * 0.001f);
-	}
+
 	// Update is called once per frame
 	Texture2D frame;
-	public bool looping = true;
+	public bool looping = false;
 
 	int lastUpdateTime = 0;
 	float elapsedTime = 0f;
@@ -104,7 +80,7 @@ public class KinectVideoPlayer : MonoBehaviour {
 			int elapsedTime = currentTimeMilliseconds - lastUpdateTime;
 			//if we have gone over the required elapsed Time
 			//print ("deltatime " + deltaTime +" interval "+intervalTime);
-			if(elapsedTime>=KinectVideoRecorder.fixedFrameTime){
+			if(elapsedTime>=HapticHealthController.fixedFrameTimePlayback){
 				frame = frameTextures[currentFrame];
 				gameObject.renderer.material.mainTexture = frame;
 				//Old way
@@ -124,9 +100,9 @@ public class KinectVideoPlayer : MonoBehaviour {
 						gameObject.renderer.material.mainTexture = frame;
 					}
 				}
-				int overflow = (int)(elapsedTime%KinectVideoRecorder.fixedFrameTime);
-				totalTime+=KinectVideoRecorder.fixedFrameTime;
-				if(overflow>KinectVideoRecorder.fixedFrameTime){
+				int overflow = (int)(elapsedTime%HapticHealthController.fixedFrameTimePlayback);
+				totalTime+=HapticHealthController.fixedFrameTimePlayback;
+				if(overflow>HapticHealthController.fixedFrameTimePlayback){
 					print ("Skipping a frame here in player");
 					//Debug.Break ();
 				}

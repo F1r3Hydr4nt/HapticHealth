@@ -64,8 +64,7 @@ namespace Kinect2.Local
 		{
 			this.frameNumber = 0;
 		}
-		
-		float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
+
 		int lastUpdateTime = 0;
 		float elapsedTime = 0f;
 		float totalTime=0;

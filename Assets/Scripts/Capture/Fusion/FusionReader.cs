@@ -74,27 +74,80 @@ internal sealed class FusionReader
         */
 	public Vector3 [] jointPositions = new Vector3[ 25 ];
 	public Quaternion [] jointOrientations = new Quaternion[ 25 ];
+	public List<Vector3[]> storedFrameJointPositions;
+	public List<Quaternion[]> storedFrameJointOrientations;
 	public int currentTimeStamp = 0;		
 	public int lastTimeStamp = 0;
 	List<float[]>[] storedFrames;
-	public void ReadAllFrames (int count){
+	public void ReadAllFrames (int frameCount){
+				Tick ();
+				startTime = Time.time;
+				Console.Important ("Reading a recorded file.");
+				storedFrameJointPositions = new List<Vector3[]> ();
+				storedFrameJointOrientations = new List<Quaternion[]> ();
 
-	}
-	int frameToRead  = 0;
-	public void GetNextFrame(){
-		for (int i = 0; i<25; i++) {
-						jointPositions [i].x = (float)storedFrames[i] [frameToRead] [1];
-						jointPositions [i].y = (float)storedFrames[i] [frameToRead] [2];
-						jointPositions [i].z = (float)storedFrames[i] [frameToRead] [3];
-						jointOrientations [i].x = (float)storedFrames[i] [frameToRead] [4]; 
-						jointOrientations [i].y = (float)storedFrames[i] [frameToRead] [5]; 
-						jointOrientations [i].z = (float)storedFrames[i] [frameToRead] [6]; 
-						jointOrientations [i].w = (float)storedFrames[i] [frameToRead] [7]; 
+				for (int f = 0; f<frameCount; f++) {
+						Vector3 [] tempJointPositions = new Vector3[25];
+						Quaternion [] tempJointOrientations = new Quaternion[25];
+						// Pass the first data
+						string temp = reader.ReadLine ();
+						//Console.Log("file : "+reader.ReadToEnd());
+						// Parse the timestamp			
+						scanner.Parse (temp, "Frame %d %d %d %f %f %f %f");		
+						object [] _results = scanner.Results.ToArray ();		
+						if (_results.Length == 7) {		
+								lastTimeStamp = currentTimeStamp;		
+								currentTimeStamp = (int)_results [1];		
+						}
+			
+						temp = reader.ReadLine ();
+						temp = reader.ReadLine ();
+			
+						// Read and parse the joints
+						for (int i = 0; i < 25; ++i) {
+								string line = reader.ReadLine ();
+								if (line != null) {
+										// Parse the line (first data is not useful)
+										scanner.Parse (line, "%d %f %f %f %f %f %f %f");
+										object [] results = scanner.Results.ToArray ();
+										if (results.Length == 8) {
+												Vector3 v = new Vector3 ((float)results [1], (float)results [3], (float)results [3]);
+												Quaternion q = new Quaternion ((float)results [4], (float)results [5], (float)results [6], (float)results [7]);
+												tempJointPositions [i] = v;
+												tempJointOrientations [i] = q;
+										} else {
+												Console.Log ("Error in recorded file format: '" + line + "'.");
+										}
+								}
+						}
+						storedFrameJointPositions.Add (tempJointPositions);
+						storedFrameJointOrientations.Add (tempJointOrientations);
 				}
-		frameToRead++;
-		if (frameToRead > storedFrames.Length)
-						frameToRead = 0;
-	}
+
+		Console.Log ("COUNTED FRAMES: "+storedFrameJointPositions.Count.ToString());
+		Debug.Break ();
+		}
+	int nextFrameIndex = 0;
+	public void GetNextFrame ()
+	{
+				Vector3[] jointPositionsArray = storedFrameJointPositions [nextFrameIndex];
+				Quaternion [] jointOrientationsArray = storedFrameJointOrientations [nextFrameIndex];
+				// Read and parse the joints
+				for (int i = 0; i < 25; ++i) {
+						Vector3 jPos = jointPositionsArray [i];
+						Quaternion jRot = jointOrientationsArray [i];
+						jointPositions [i].x = (float)jPos.x;
+						jointPositions [i].y = (float)jPos.y;
+						jointPositions [i].z = (float)jPos.z;
+						jointOrientations [i].x = (float)jRot.x; 
+						jointOrientations [i].y = (float)jRot.y; 
+						jointOrientations [i].z = (float)jRot.z; 
+						jointOrientations [i].w = (float)jRot.w; 
+				}
+				if(nextFrameIndex<storedFrameJointPositions.Count-1)nextFrameIndex++;
+		Console.Log ("values "+ jointPositions[0]);
+		}
+
 	public void UpdateNextFrame() 
 	{
 		if( reading && reader != null && scanner != null )
@@ -162,6 +215,7 @@ internal sealed class FusionReader
 	public const int headernumLine = 37;
 	private void PassHeader()
 	{
+		Console.Log ("PassHeader");
 		for( int i = 0; i < headernumLine; ++i )
 		{
 			string line = reader.ReadLine();

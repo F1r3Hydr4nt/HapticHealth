@@ -119,7 +119,6 @@ public class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFrame>
 	{
 		this.frameNumber = 0;
 	}
-	float fixedFrameTime = 1000f / (float)KinectVideoRecorder.fps;
 	int lastUpdateTime = 0;
 	
 	float totalTime =0f;

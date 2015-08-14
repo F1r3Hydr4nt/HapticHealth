@@ -37,7 +37,7 @@ public class KinectVideoRecorder : MonoBehaviour {
 			Texture2D textureCopy = Instantiate((Texture2D)videoView.renderer.material.mainTexture)as Texture2D;
 			videoFrameTextures.Add(textureCopy);
 		}
-		totalTime += fixedFrameTime;
+		totalTime += HapticHealthController.fixedFrameTimeRecording;
 	}
 	float elapsedTime;
 	int startTime;
@@ -64,9 +64,6 @@ public class KinectVideoRecorder : MonoBehaviour {
 						oThread.Start ();
 	}
 	public Texture2D testTexture;
-
-	public static int fps = 20;
-	public static float fixedFrameTime = 1000f / (float)fps;
 	int lastUpdateTime = 0;
 	float downSamplingFactor = 0.001f;
 	void AddScaledTexture (Texture2D textureCopy)
@@ -77,16 +74,6 @@ public class KinectVideoRecorder : MonoBehaviour {
 	float totalTime =0f;
 
 	void Update(){
-		
-		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			fps --;
-			fixedFrameTime = 1000f / (float)fps;
-				}
-		
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			fps++;
-			fixedFrameTime = 1000f / (float)fps;
-				}
 		if (isRecording) {
 			/*elapsedTime += Time.deltaTime;
 			//print (elapsedTime +" "+fixedFrameTime);
@@ -108,18 +95,18 @@ public class KinectVideoRecorder : MonoBehaviour {
 			int currentTimeMilliseconds = Environment.TickCount;
 			int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
 			//if we have gone over the required elapsed Time
-			if(timeElapsed>=fixedFrameTime){
+			if(timeElapsed>=HapticHealthController.fixedFrameTimeRecording){
 //				print (timeElapsed+" "+fixedFrameTime);
-				totalTime+=fixedFrameTime;
+				totalTime+=HapticHealthController.fixedFrameTimeRecording;
 				//Take a frame
 			if(videoView.renderer.material.mainTexture!=null){
 				Texture2D textureCopy = Instantiate((Texture2D)videoView.renderer.material.mainTexture)as Texture2D;
 				videoFrameTextures.Add(textureCopy);
 			}
 				//how far past the required time have we gotten?
-				int overflow = (int)(timeElapsed%fixedFrameTime);
+				int overflow = (int)(timeElapsed%HapticHealthController.fixedFrameTimeRecording);
 				
-				if(overflow>fixedFrameTime){
+				if(overflow>HapticHealthController.fixedFrameTimeRecording){
 					print ("Skipping a frame here in recorder");
 					//Debug.Break ();
 				}

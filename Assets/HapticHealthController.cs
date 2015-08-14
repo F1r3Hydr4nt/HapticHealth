@@ -8,20 +8,56 @@ public class HapticHealthController : MonoBehaviour {
 	public FusedSkeleton_FromFile fusedSkeletonPlayback;
 	public FusedSkeleton_Main fusionSkeleton;
 	bool recording = false;
-
+	bool playing = false;
+	
+	public static int recordingFPS = 30;
+	public static int playbackFPS = 30;
+	public static float fixedFrameTimeRecording = 1000f / (float)recordingFPS;
+	public static float fixedFrameTimePlayback = 1000f / (float)playbackFPS;
 	// Update is called once per frame
+	public enum ControllerState {RECORDING, PLAYBACK, IDLE};
+	public static ControllerState state = ControllerState.IDLE;
+
 	void Update () {
+		ProcessKeyboardInput ();
+		switch (state) {
+		case ControllerState.RECORDING:
+			RecordUpdate();
+				break;
+		case ControllerState.PLAYBACK:
+			PlaybackUpdate();
+				break;
+		default:
+			break;
+		}
+	}
+
+	void RecordUpdate ()
+	{
+	}
+
+	void PlaybackUpdate ()
+	{
+	}
+
+	void ProcessKeyboardInput ()
+	{
 		if (Input.GetKeyDown (KeyCode.A)) {
-			if(!recording){
+			if(!recording)
 				StartRecording();
-			}
-			else{
+			else
 				StopRecording();
-			}
 		}
 		if (Input.GetKeyDown (KeyCode.S)) {
-			PlaybackRecording();
+			if(!playing)
+				StartPlayback();
+			else
+				StopPlayback();
 		}
+		if (Input.GetKeyDown (KeyCode.D))
+			HalfPlayBackSpeed();
+		if (Input.GetKeyDown (KeyCode.F))
+			DoublePlayBackSpeed();
 	}
 
 	void StartRecording(){
@@ -35,11 +71,31 @@ public class HapticHealthController : MonoBehaviour {
 		fusionSkeleton.StopRecording();
 		videoRecorder.StopRecording();
 	}
-
-	void PlaybackRecording(){
-		
-		fusedSkeletonPlayback.gameObject.SetActive(true);
-		fusedSkeletonPlayback.StartPlayback (fusionSkeleton.fusionCapturer.exporter.totalFramesWritten);
+	
+	void StartPlayback(){
+		playing = true;
+		//fusedSkeletonPlayback.StartPlayback ();
+		fusedSkeletonPlayback.StartPlaybackFromMemory (fusionSkeleton.fusionCapturer.exporter.totalFramesWritten);
 		videoPlayer.StartPlayback ();
+	}
+
+	void StopPlayback(){
+		playing = false;
+		fusedSkeletonPlayback.StopPlayback ();
+		videoPlayer.StopPlayback ();
+	}
+
+	void HalfPlayBackSpeed ()
+	{
+		playbackFPS = (int)(playbackFPS * 0.5f);
+		fixedFrameTimePlayback = 1000f / (float)playbackFPS;
+		print ("FPS x 2");
+	}
+
+	void DoublePlayBackSpeed ()
+	{
+		playbackFPS = (int)(playbackFPS * 2f);
+		fixedFrameTimePlayback = 1000f / (float)playbackFPS;
+		print ("FPS x 0.5");
 	}
 }

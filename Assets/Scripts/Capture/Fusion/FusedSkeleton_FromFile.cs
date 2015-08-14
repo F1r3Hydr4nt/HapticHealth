@@ -37,11 +37,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		// Color
 		fusedView.sourceView = sourceView;
 		fusedView.SetOffMaterial ();
-		//fusedView.Awake ();
-		Tick ();
-		fusedView.enableRendering ();
-		reader = new FusionReader (recordFile);
-		//reader.Start_Reading ();
+
 	}
 	int lastUpdateTime = 0;
 	System.Diagnostics.Stopwatch stopwatch;
@@ -54,35 +50,65 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		print ("Fusion Playback time: "+stopwatch.Elapsed);
 	}
 	float totalTime =0f;
-	public void StartPlayback (int framesRecorded) {
-		reader.ReadAllFrames (framesRecorded);
-			lastUpdateTime = Environment.TickCount;
-	}
-	void Update(){	
-				int currentTimeMilliseconds = Environment.TickCount;
-				int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
-				//if we have gone over the required elapsed Time
-		if (timeElapsed >= KinectVideoRecorder.fixedFrameTime) {
-					//				print (timeElapsed+" "+fixedFrameTime);
-					//Take a frame
-					
-					// Update the renderer
-					UpdateJoints ();
+	bool isPlaying = false;
+	public void StartPlayback () {
+		fromMemory = false;
 		
-					//how far past the required time have we gotten?
-			int overflow = (int)(timeElapsed % KinectVideoRecorder.fixedFrameTime);
+		Tick ();
+		fusedView.enableRendering ();
+		reader = new FusionReader (recordFile);
+
+		reader.Start_Reading ();
+		//reader.ReadAllFrames (framesRecorded);
+			lastUpdateTime = Environment.TickCount;
+		isPlaying = true;
+	}
+
+	bool fromMemory;
+
+	public void StartPlaybackFromMemory (int framesRecorded) {
+		fromMemory = true;
+		Tick ();
+		fusedView.enableRendering ();
+		reader = new FusionReader (recordFile);
+		
+		//		reader.Start_Reading ();
+		reader.ReadAllFrames (framesRecorded);
+		lastUpdateTime = Environment.TickCount;
+		isPlaying = true;
+	}
+	public void StopPlayback(){
+		
+		fusedView.disableRendering ();
+		isPlaying = false;
+		}
+	void Update(){	
+		if (isPlaying) {
+						int currentTimeMilliseconds = Environment.TickCount;
+						int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
+						//if we have gone over the required elapsed Time
+						if (timeElapsed >= HapticHealthController.fixedFrameTimePlayback) {
+								//				print (timeElapsed+" "+fixedFrameTime);
+								//Take a frame
 					
-			if (overflow > KinectVideoRecorder.fixedFrameTime) {
-						print ("Skipping a frame here in fused skeleton");
-						//Debug.Break ();
-					}
+								// Update the renderer
+								UpdateJoints ();
+		
+								//how far past the required time have we gotten?
+				int overflow = (int)(timeElapsed % HapticHealthController.fixedFrameTimePlayback);
 					
-					int correctedLastUpdateTime = currentTimeMilliseconds - overflow;
+				if (overflow > HapticHealthController.fixedFrameTimePlayback) {
+										print ("Skipping a frame here in fused skeleton");
+										//Debug.Break ();
+								}
 					
-					//set the last Update time as the time now minus the overlap of the delta
-					lastUpdateTime = correctedLastUpdateTime;
+								int correctedLastUpdateTime = currentTimeMilliseconds - overflow;
+					
+								//set the last Update time as the time now minus the overlap of the delta
+								lastUpdateTime = correctedLastUpdateTime;
+						}
+						//UpdateJoints ();
 				}
-		//UpdateJoints ();
 	}
 
 		
@@ -189,8 +215,8 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		elapsed = 0;
 		*/
 		// Get the next frame
-		reader.UpdateNextFrame ();
-		//reader.GetNextFrame ();
+		if(!fromMemory)reader.UpdateNextFrame ();
+		else reader.GetNextFrame ();
 		// Update the skeleton
 		for (int i = 0; i < 25; ++i ) {
 			fusedView.SetJointPosition( KinectJoints[ i ], reader.jointPositions[ i ] );
