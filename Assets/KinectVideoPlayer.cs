@@ -25,16 +25,19 @@ public class KinectVideoPlayer : MonoBehaviour {
 		elapsedTime = 0f;
 		isPlaying = true;
 		totalTime += HapticHealthController.fixedFrameTimePlayback;
+		isFinishedPlayback = false;
 	}
 	public Texture2D testTexture;
 	public void StopPlayback () {
 		Tock ();
-		foreach(Texture2D t in frameTextures)Destroy (t);
+		//foreach(Texture2D t in frameTextures)Destroy (t);
 		isPlaying = false;
+		isFinishedPlayback = true;
 		currentFrame = 0;
 	}
 	int currentFrame = 0;
-
+	
+	public bool isFinishedPlayback = false;
 	// Update is called once per frame
 	Texture2D frame;
 	public bool looping = false;
@@ -87,18 +90,18 @@ public class KinectVideoPlayer : MonoBehaviour {
 				//frame.LoadImage(frames[currentFrame]);
 				currentFrame++;
 				if(currentFrame>frameTextures.Count-1){
-					if(looping){
+					/*if(looping){
 						print (TimeSpan.FromMilliseconds(totalTime).ToString()+"s");
 						totalTime = 0f;
 						Tock ();
 						Tick ();
 						currentFrame = 0;
 					}
-					else{
+					else{*/
 						StopPlayback();
-						frame = new Texture2D(2,2);
-						gameObject.renderer.material.mainTexture = frame;
-					}
+						//frame = new Texture2D(2,2);
+						//gameObject.renderer.material.mainTexture = frame;
+					//}
 				}
 				int overflow = (int)(elapsedTime%HapticHealthController.fixedFrameTimePlayback);
 				totalTime+=HapticHealthController.fixedFrameTimePlayback;

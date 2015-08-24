@@ -113,6 +113,7 @@ internal sealed class FusionReader
 										if (results.Length == 8) {
 												Vector3 v = new Vector3 ((float)results [1], (float)results [3], (float)results [3]);
 												Quaternion q = new Quaternion ((float)results [4], (float)results [5], (float)results [6], (float)results [7]);
+												//Console.Log("v:"+v.ToString());
 												tempJointPositions [i] = v;
 												tempJointOrientations [i] = q;
 										} else {
@@ -125,7 +126,7 @@ internal sealed class FusionReader
 				}
 
 		Console.Log ("COUNTED FRAMES: "+storedFrameJointPositions.Count.ToString());
-		Debug.Break ();
+		//Debug.Break ();
 		}
 	int nextFrameIndex = 0;
 	public void GetNextFrame ()
@@ -145,9 +146,9 @@ internal sealed class FusionReader
 						jointOrientations [i].w = (float)jRot.w; 
 				}
 				if(nextFrameIndex<storedFrameJointPositions.Count-1)nextFrameIndex++;
-		Console.Log ("values "+ jointPositions[0]);
+		//Console.Log ("values "+ jointPositions[14].ToString());
 		}
-
+	public bool finishedPlayback = false;
 	public void UpdateNextFrame() 
 	{
 		if( reading && reader != null && scanner != null )
@@ -200,7 +201,8 @@ internal sealed class FusionReader
 					startTime = Time.time;
 					
 					Tock ();
-					Tick ();
+					reading = false;
+					finishedPlayback = true;
 					//Console.Log("Reader rewinding the file.");
 					reader.BaseStream.Position = 0;
 					reader.DiscardBufferedData();
@@ -228,6 +230,7 @@ internal sealed class FusionReader
 		startTime = Time.time;
 		Console.Important ("Reading a recorded file.");
 		reading = true;
+		finishedPlayback = false;
 	}
 	System.Diagnostics.Stopwatch stopwatch;
 	void Tick(){

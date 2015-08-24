@@ -54,10 +54,10 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 	public void StartPlayback () {
 		fromMemory = false;
 		
+		isFinishedPlayback = false;
 		Tick ();
 		fusedView.enableRendering ();
 		reader = new FusionReader (recordFile);
-
 		reader.Start_Reading ();
 		//reader.ReadAllFrames (framesRecorded);
 			lastUpdateTime = Environment.TickCount;
@@ -76,14 +76,15 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		reader.ReadAllFrames (framesRecorded);
 		lastUpdateTime = Environment.TickCount;
 		isPlaying = true;
+		isFinishedPlayback = false;
 	}
 	public void StopPlayback(){
-		
+		isFinishedPlayback = true;
 		fusedView.disableRendering ();
 		isPlaying = false;
 		}
 	void Update(){	
-		if (isPlaying) {
+		if (isPlaying && !isFinishedPlayback) {
 						int currentTimeMilliseconds = Environment.TickCount;
 						int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
 						//if we have gone over the required elapsed Time
@@ -150,6 +151,7 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 	int skipFrame = 0;
 	const int skipNum = 0;
 	long currentTime = 0, lastTime = 0, elapsed = 0;
+	public bool isFinishedPlayback = false;
 	private void UpdateJoints() {
 		/*
 		// Slow motion
@@ -215,12 +217,19 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 		elapsed = 0;
 		*/
 		// Get the next frame
-		if(!fromMemory)reader.UpdateNextFrame ();
-		else reader.GetNextFrame ();
-		// Update the skeleton
-		for (int i = 0; i < 25; ++i ) {
-			fusedView.SetJointPosition( KinectJoints[ i ], reader.jointPositions[ i ] );
-			fusedView.SetJointOrientation( KinectJoints[ i ], reader.jointOrientations[ i ] );
+		if (!reader.finishedPlayback) {
+						if (!fromMemory)
+								reader.UpdateNextFrame ();
+						else
+								reader.GetNextFrame ();
+						// Update the skeleton
+						for (int i = 0; i < 25; ++i) {
+								fusedView.SetJointPosition (KinectJoints [i], reader.jointPositions [i]);
+								fusedView.SetJointOrientation (KinectJoints [i], reader.jointOrientations [i]);
+						}
+				}
+		else{
+			StopPlayback();
 		}
 	}
 }

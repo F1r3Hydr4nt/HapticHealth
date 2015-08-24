@@ -7,6 +7,7 @@ public class HapticHealthController : MonoBehaviour {
 	public KinectVideoPlayer videoPlayer;
 	public FusedSkeleton_FromFile fusedSkeletonPlayback;
 	public FusedSkeleton_Main fusionSkeleton;
+	public WiMuPlotter wiMuPlotter;
 	bool recording = false;
 	bool playing = false;
 	
@@ -17,19 +18,13 @@ public class HapticHealthController : MonoBehaviour {
 	// Update is called once per frame
 	public enum ControllerState {RECORDING, PLAYBACK, IDLE};
 	public static ControllerState state = ControllerState.IDLE;
-
+	bool isLoopingPlayback = true;
 	void Update () {
 		ProcessKeyboardInput ();
-		switch (state) {
-		case ControllerState.RECORDING:
-			RecordUpdate();
-				break;
-		case ControllerState.PLAYBACK:
-			PlaybackUpdate();
-				break;
-		default:
-			break;
+		if (playing) {
+			if(wiMuPlotter.isFinishedPlayback&&fusedSkeletonPlayback.isFinishedPlayback&&videoPlayer.isFinishedPlayback &&playing)StopPlayback();
 		}
+
 	}
 
 	void RecordUpdate ()
@@ -64,25 +59,26 @@ public class HapticHealthController : MonoBehaviour {
 		recording = true;
 		fusionSkeleton.StartRecording();
 		videoRecorder.StartRecording();
+		wiMuPlotter.StartRecording ();
 	}
 
 	void StopRecording(){
 		recording = false;
 		fusionSkeleton.StopRecording();
 		videoRecorder.StopRecording();
+		wiMuPlotter.StopRecording ();
 	}
 	
 	void StartPlayback(){
 		playing = true;
-		//fusedSkeletonPlayback.StartPlayback ();
-		fusedSkeletonPlayback.StartPlaybackFromMemory (fusionSkeleton.fusionCapturer.exporter.totalFramesWritten);
+		fusedSkeletonPlayback.StartPlayback ();
+		//fusedSkeletonPlayback.StartPlaybackFromMemory (fusionSkeleton.fusionCapturer.exporter.totalFramesWritten);
 		videoPlayer.StartPlayback ();
+		wiMuPlotter.StartPlayback ();
 	}
 
 	void StopPlayback(){
 		playing = false;
-		fusedSkeletonPlayback.StopPlayback ();
-		videoPlayer.StopPlayback ();
 	}
 
 	void HalfPlayBackSpeed ()

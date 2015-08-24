@@ -88,7 +88,7 @@ public sealed class FusionExporting : MonoBehaviour
 				totalTime +=  HapticHealthController.fixedFrameTimeRecording;
 				if (overflow >  HapticHealthController.fixedFrameTimeRecording) {
 					print ("Skipping a frame here in player");
-					Debug.Break ();
+					//Debug.Break ();
 				}
 				int correctedLastUpdateTime = currentTimeMilliseconds - overflow;
 				//set the last Update time as the time now minus the overlap of the delta
