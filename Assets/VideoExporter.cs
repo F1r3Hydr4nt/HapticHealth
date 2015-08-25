@@ -37,7 +37,7 @@ class VideoExporter
 		int frameNumber = 0;
 		foreach (byte[] t in videoFrames) {
 			//t.GetPixel(0,0);
-			System.IO.File.WriteAllBytes(filePath+frameNumber.ToString()+".png", t); //app path n1!
+			System.IO.File.WriteAllBytes(filePath+frameNumber.ToString()+".jpg", t); //app path n1!
 			frameNumber++;
 		}
 	}
