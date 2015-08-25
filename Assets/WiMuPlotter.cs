@@ -7,6 +7,33 @@ using System.Threading;
 using System;
 public class WiMuPlotter : MonoBehaviour {
 	public FusedSkeleton_Main fusedSkeleton;
+	string currentFilename = "";
+	public void SetMotionFilename (string s)
+	{
+		currentFilename = s;
+	}
+
+	public void PlaybackPrerecordedMotion ()
+	{
+		ReadValuesInFromFile ();
+		StartPlayback ();
+	}
+
+	void ReadValuesInFromFile(){
+		wiMuValues1 = new List<float> ();
+		wiMuValues2 = new List<float> ();
+		string text = System.IO.File.ReadAllText(FusedSkeleton_FromFile.recordDirectory+@currentFilename+".txt");
+		string [] values = text.Split ('\n');
+		foreach (string s in values) {
+			if(s!=""){
+//			print (s);
+			string []valueSplit = s.Split(' ');
+			wiMuValues1.Add (float.Parse(valueSplit[0]));
+			wiMuValues2.Add (float.Parse(valueSplit[1]));
+			}
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		//  Create a new graph named "MouseX", with a range of 0 to 2000, colour green at position 100,100
@@ -46,9 +73,9 @@ public class WiMuPlotter : MonoBehaviour {
 		// WriteAllLines creates a file, writes a collection of strings to the file, 
 		// and then closes the file.  You do NOT need to call Flush() or Close().
 		for(int i=0;i<wiMuValues1.Count;i++){
-			valueFile+=wiMuValues1[i].ToString()+" "+wiMuValues1[2].ToString()+'\n';
+			valueFile+=wiMuValues1[i].ToString()+" "+wiMuValues2[i].ToString()+'\n';
 		}
-		System.IO.File.WriteAllText(FusedSkeleton_FromFile.recordDirectory+@"WiMuValues.txt",valueFile);
+		System.IO.File.WriteAllText(FusedSkeleton_FromFile.recordDirectory+@currentFilename+".txt",valueFile);
 	}
 
 	int currentFrame;
@@ -84,9 +111,11 @@ public class WiMuPlotter : MonoBehaviour {
 				totalTime+=HapticHealthController.fixedFrameTimeRecording;
 				//Take a frame
 			if (fusedSkeleton.WimusOnline) {
+				//print ("online");
 				float value1 = Mathf.Abs(fusedSkeleton.totalMagnitudes [0]);
 				float value2 = Mathf.Abs(fusedSkeleton.totalMagnitudes [1]);
 				if(!isPlaying){
+				//	print ("notPLaying");
 					PlotManager.Instance.PlotAdd ("0", value1);
 					PlotManager.Instance.PlotAdd ("1", value2);
 					if(isRecording){
@@ -95,6 +124,7 @@ public class WiMuPlotter : MonoBehaviour {
 					}
 				}
 				else{
+					//print ("isPlayingBack");
 					if(currentFrame<wiMuValues1.Count){
 						PlotManager.Instance.PlotAdd ("0", wiMuValues1[currentFrame]);
 						PlotManager.Instance.PlotAdd ("1", wiMuValues2[currentFrame]);
@@ -102,6 +132,7 @@ public class WiMuPlotter : MonoBehaviour {
 					}else StopPlayback();
 				}
 			} else {
+				//print ("not online");
 				//PlotManager.Instance.PlotAdd ("0", 0);
 				//PlotManager.Instance.PlotAdd ("1", 0);
 				

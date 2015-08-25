@@ -20,9 +20,15 @@ using Fusion;
 [RequireComponent(typeof(FusionCapturing))]
 public sealed class FusionExporting : MonoBehaviour 
 {
+	public void SetFilename (string s)
+	{
+		print ("SetMotionFilename Exporting");
+		Filename = s;
+	}
+
 	#region Properties
 	internal FrameSpan Elapsed { get; private set; }
-	internal string Filename { get; private set; }
+	internal string Filename { get;  set; }
 	#endregion
 	#region Unity
 	void Awake()
@@ -38,15 +44,11 @@ public sealed class FusionExporting : MonoBehaviour
 
 	void OnEnable()
 	{
-		var path = Path.Combine(this.outputDirectory,
-		                                     DateTime.UtcNow.ToString("yy-MM-dd-HH-mm-ss"));
-		if(!Directory.Exists(path))
-		{
-			Directory.CreateDirectory(path);
-		}
-		this.Filename = Path.Combine(path,DefaultFileName);
-		Console.Important("FUSION EXPORTING @ " + this.Filename);
-		this.writer = SklxtWriter.Constructor.Start().New(this.Filename).Construct();
+		//this.Filename = Path.Combine(path,DefaultFileName);
+		//Console.Important("FUSION EXPORTING @ " + this.Filename);
+		string filepath = FusedSkeleton_FromFile.recordDirectory + @Filename + ".sklxt";
+		this.writer = SklxtWriter.Constructor.Start().New(filepath).Construct();
+		print ("filePath"+filepath);
 		this.enabled = this.writer.Start();		
 		Tick ();
 		this.writer.Write(this.tracker.CurrentFrame);
@@ -102,7 +104,7 @@ public sealed class FusionExporting : MonoBehaviour
 	{
 		if(this.writer != null && this.writer.CanWrite)
 		{
-			//print ("FusionExporting wrote "+totalFramesWritten);
+			print ("FusionExporting wrote "+totalFramesWritten);
 			//Debug.Break();
 			this.Elapsed = this.writer.Stop();
 			Tock ();

@@ -62,6 +62,14 @@ namespace Fusion
 	} 
 
 	public class FusedSkeleton_Main : MonoBehaviour {
+		string currentFilename = "";
+		public void SetMotionFilename (string s)
+		{
+			print ("SetMotionFilename Main");
+			currentFilename = s;
+			fusionCapturer.SetFilename (currentFilename);
+			kinectCapturer.SetFilename (currentFilename);
+		}
 
 		/*-----------------------------------------------------*/
 		// Recorder
@@ -346,7 +354,7 @@ namespace Fusion
 			if (Input.GetKeyUp (KeyCode.A)) {
 				if( viewChoice == 0 )
 					viewChoice = 1;
-				else
+					else
 					viewChoice = 0;
 			}*/
 

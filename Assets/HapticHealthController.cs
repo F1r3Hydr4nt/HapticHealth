@@ -53,7 +53,40 @@ public class HapticHealthController : MonoBehaviour {
 			HalfPlayBackSpeed();
 		if (Input.GetKeyDown (KeyCode.F))
 			DoublePlayBackSpeed();
+		if (Input.GetKeyDown (KeyCode.P))
+			PlaybackPrerecordedMotion("firstMotion");
+		
+		if (Input.GetKeyDown (KeyCode.R)) {
+			if(!recording)
+				RecordFirstMotion();
+		}
 	}
+
+	void PlaybackPrerecordedMotion (string s)
+	{
+		fusedSkeletonPlayback.SetMotionFilename(s);
+		wiMuPlotter.SetMotionFilename(s);
+		videoPlayer.SetMotionFilename(s);
+		fusedSkeletonPlayback.PlaybackPrerecordedMotion ();
+		wiMuPlotter.PlaybackPrerecordedMotion ();
+		videoPlayer.PlaybackPrerecordedMotion ();
+		playing = true;
+	}
+
+	bool isSavingVideoToFile = false;
+	
+	
+	void RecordFirstMotion ()
+	{
+		print ("RecordFirstMotion");
+		fusionSkeleton.SetMotionFilename("firstMotion");
+		wiMuPlotter.SetMotionFilename ("firstMotion");
+		videoRecorder.SetMotionFilename ("firstMotion");
+		isSavingVideoToFile = true;
+		StartRecording ();
+	}
+
+
 
 	void StartRecording(){
 		recording = true;
@@ -65,7 +98,10 @@ public class HapticHealthController : MonoBehaviour {
 	void StopRecording(){
 		recording = false;
 		fusionSkeleton.StopRecording();
-		videoRecorder.StopRecording();
+		if (!isSavingVideoToFile)
+						videoRecorder.StopRecording ();
+				else
+						videoRecorder.StopRecordingAndExportVideo ();
 		wiMuPlotter.StopRecording ();
 	}
 	

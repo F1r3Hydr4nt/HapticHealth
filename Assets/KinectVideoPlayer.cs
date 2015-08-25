@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
-
+using System.IO;
+using System.Linq;
 public class KinectVideoPlayer : MonoBehaviour {
 	public List<byte[]> frames = new List<byte[]>();
 	public List<Texture2D> frameTextures = new List<Texture2D>();
 	bool isPlaying = false;
+	string currentFilename = "";
+	public void SetMotionFilename (string s)
+	{
+		currentFilename = s;
+	}
+
 	// Use this for initialization
 	void Awake(){
 		frame = new Texture2D(2,2);
@@ -15,6 +22,34 @@ public class KinectVideoPlayer : MonoBehaviour {
 	public void PassFrames (List<Texture2D> newFrames) {
 		frameTextures = newFrames;
 	}
+
+	List<Texture2D> ReadInFrames ()
+	{
+		List<Texture2D> tempFrames = new List<Texture2D>();
+		string[] files = Directory.GetFiles (FusedSkeleton_FromFile.recordDirectory + "/Videos/");
+		List<string> relevantFiles = new List<string> ();
+		foreach (string s in files) {
+			if(s.Contains (currentFilename))relevantFiles.Add (s);
+		}
+		relevantFiles = relevantFiles.OrderBy(x=>x.Length).ThenBy(x=> x).ToList();
+		foreach (string s in relevantFiles) {
+			Texture2D tex = null;
+			byte[] fileData;
+			fileData = File.ReadAllBytes(s);
+			tex = new Texture2D(2,2);
+			tex.LoadImage(fileData);
+			tempFrames.Add(tex);
+		}
+		hasLoadedFrames = true;
+		return tempFrames;
+	}
+	bool hasLoadedFrames = false;
+	public void PlaybackPrerecordedMotion ()
+	{
+		if(!hasLoadedFrames)frameTextures = ReadInFrames ();
+		StartPlayback ();
+	}
+
 	public void StartPlayback () {
 		print ("StartPlayback");
 //		print ("fixedFrameTime * Frame count should be equal at end: "+fixedFrameTime*frameTextures.Count);
@@ -129,5 +164,9 @@ public class KinectVideoPlayer : MonoBehaviour {
 	void Tock(){
 		if(stopwatch!=null)
 			print ("VideoPlayback time: "+stopwatch.Elapsed+" RecordedFrames# "+frameTextures.Count);
+	}
+
+	void OnDisable(){
+		print ("something");
 	}
 }

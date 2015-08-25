@@ -26,6 +26,12 @@ public class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFrame>
 	public bool HasNewFrame { get; private set; }
 	public int currentIndex = 0;
 
+	public void SetFilename (string s)
+	{
+		print ("SetMotionFilename Capturer");
+		this.exporter.SetFilename (s);
+	}
+
 	// Fusion embedded into SkeletonFrame structure
 	private SkeletonFrame currentFrame;
 	public void UpdateCurrentFrame( Dictionary< JointType, FusionJoint > _fusionJoints ) 
@@ -210,8 +216,8 @@ public class FusionCapturing : Capturer,ISkeletonGenerator<SkeletonFrame>
 		isRecording = false;
 		this.Stop();
 		this.LatestCapture = this.exporter.Filename;
-		print ("passing filename " + this.LatestCapture);
-		FusedSkeleton_FromFile.recordFile = LatestCapture;
+//		print ("passing filename " + this.LatestCapture);
+	//	FusedSkeleton_FromFile.recordFile = LatestCapture;
 	}
 	public KinectVideoPlayer videoPlayer;
 	public override bool CanStop { get { return this.exporter.enabled; } }	

@@ -41,6 +41,11 @@ namespace Kinect2.Local
 			RecordedFrames = new List<SkeletonFrame> ();
 		}
 		
+		
+		public void SetFilename (string currentFilename)
+		{
+			this.exporter.SetFilename (currentFilename);
+		}
 		void Start () 
 		{
 			var sensor = KinectSensor.GetDefault();

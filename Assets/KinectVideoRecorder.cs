@@ -39,6 +39,12 @@ public class KinectVideoRecorder : MonoBehaviour {
 		}
 		totalTime += HapticHealthController.fixedFrameTimeRecording;
 	}
+	string filename;
+	public void SetMotionFilename (string s)
+	{
+		filename = s;
+	}
+
 	float elapsedTime;
 	int startTime;
 	
@@ -52,9 +58,28 @@ public class KinectVideoRecorder : MonoBehaviour {
 		System.GC.Collect ();
 	}
 
+	public void StopRecordingAndExportVideo ()
+	{
+		
+		print (TimeSpan.FromMilliseconds(totalTime).ToString() + "s");
+		Tock ();
+		isRecording = false;
+		foreach (Texture2D t in videoFrameTextures)
+						videoFrames.Add (t.EncodeToJPG ());
+		ExportVideo (filename);
+		ReleaseMemory ();
+	}
+
+	void ReleaseMemory(){
+		foreach(Texture2D t in videoFrameTextures)Destroy (t);
+		videoFrameTextures = null;
+		videoFrames = null;
+		System.GC.Collect ();
+	}
+
 	void ExportVideo (string testVideo)
 	{
-		VideoExporter exporter = new VideoExporter (Application.dataPath + "/Videos/"+testVideo, videoFrames);
+		VideoExporter exporter = new VideoExporter (FusedSkeleton_FromFile.recordDirectory + "/Videos/"+testVideo,testVideo, videoFrames);
 
 						// Create the thread object, passing in the Alpha.Beta method
 						// via a ThreadStart delegate. This does not start the thread.

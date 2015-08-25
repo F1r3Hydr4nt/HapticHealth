@@ -27,6 +27,11 @@ namespace Kinect2.IO
 		internal string Filename { get; private set; }
 		#endregion
 		#region Unity
+
+		public void SetFilename (string currentFilename)
+		{
+			Filename = currentFilename;
+		}
 		void Awake()
 		{
 			this.tracker = GetComponent<SkeletonCapturing>();
@@ -55,9 +60,9 @@ namespace Kinect2.IO
 			{
 				Directory.CreateDirectory(path);
 			}
-			this.Filename = Path.Combine(path,DefaultFileName);
+			//this.Filename = Path.Combine(path,DefaultFileName);
 			Console.Important("EXPORTING @ " + this.Filename);
-			this.writer = SklxtWriter.Constructor.Start().New(this.Filename).Construct();
+			this.writer = SklxtWriter.Constructor.Start().New(FusedSkeleton_FromFile.recordDirectory+@Filename+".sklxt").Construct();
 			this.enabled = this.writer.Start();		
 		}
 
@@ -84,7 +89,7 @@ namespace Kinect2.IO
 		#endregion
 		#region Fields
 		private SkeletonCapturing tracker;
-		private SklxtWriter writer;
+		public SklxtWriter writer;
 
 		private string outputDirectory;
 

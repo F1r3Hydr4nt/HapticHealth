@@ -20,7 +20,12 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 	public BodySourceView sourceView;
 	private BodyFusedView fusedView;
 	private SkeletonFrame currentFrame;
-
+	
+	public void PlaybackPrerecordedMotion ()
+	{
+		//recordFile = recordDirectory + @"tmp.sklxt";
+		StartPlayback ();
+	}
 	void OnDestroy() {
 		
 		// Put back the color
@@ -29,6 +34,11 @@ public class FusedSkeleton_FromFile : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+	}
+
+	public void SetMotionFilename (string s)
+	{
+		recordFile = recordDirectory + @s + ".sklxt";
 	}
 
 	void Awake() {
