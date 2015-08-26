@@ -17,7 +17,7 @@ class VideoExporter
 		filePath = videoPath;
 		videoFrames = frames;
 		motionName = name;
-		Debug.Log ("Video Exporter frames received "+frames.Count);
+		//Debug.Log ("Video Exporter frames received "+frames.Count);
 	}
 
 	void FindAndDeletePreviousMotionFiles ()
@@ -26,7 +26,7 @@ class VideoExporter
 		foreach (string s in files) {
 						if (s.Contains (motionName)) {
 								File.Delete (s);
-								Debug.Log ("Deleting previous file:" + s);
+								//Debug.Log ("Deleting previous file:" + s);
 						}
 				}
 	}
@@ -39,6 +39,12 @@ class VideoExporter
 			//t.GetPixel(0,0);
 			System.IO.File.WriteAllBytes(filePath+frameNumber.ToString()+".jpg", t); //app path n1!
 			frameNumber++;
+		}
+	}
+
+	public void TestThread(){
+		while (true) {
+			//Debug.Log("TestThread");
 		}
 	}
 }

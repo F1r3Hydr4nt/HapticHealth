@@ -57,6 +57,12 @@ public class KinectVideoRecorder : MonoBehaviour {
 		videoPlayer.PassFrames (videoFrameTextures);
 		System.GC.Collect ();
 	}
+	float downSamplingFactor = 0.25f;
+	Texture2D DownScale (Texture2D t)
+	{
+		TextureScale.Point(t,(int)(t.width*downSamplingFactor),(int)(t.height*downSamplingFactor));
+		return t;
+	}
 
 	public void StopRecordingAndExportVideo ()
 	{
@@ -64,8 +70,10 @@ public class KinectVideoRecorder : MonoBehaviour {
 		print (TimeSpan.FromMilliseconds(totalTime).ToString() + "s");
 		Tock ();
 		isRecording = false;
-		foreach (Texture2D t in videoFrameTextures)
-						videoFrames.Add (t.EncodeToJPG ());
+		foreach (Texture2D t in videoFrameTextures) {
+			videoFrames.Add (DownScale(t).EncodeToJPG ());
+
+		}
 		ExportVideo (filename);
 		ReleaseMemory ();
 	}
@@ -90,12 +98,6 @@ public class KinectVideoRecorder : MonoBehaviour {
 	}
 	public Texture2D testTexture;
 	int lastUpdateTime = 0;
-	float downSamplingFactor = 0.001f;
-	void AddScaledTexture (Texture2D textureCopy)
-	{
-		TextureScale.Point (textureCopy,(int)(textureCopy.width*downSamplingFactor),(int)(textureCopy.height*downSamplingFactor));
-		videoFrameTextures.Add (textureCopy);
-	}
 	float totalTime =0f;
 
 	void Update(){

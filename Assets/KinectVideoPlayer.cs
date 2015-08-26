@@ -3,7 +3,17 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 public class KinectVideoPlayer : MonoBehaviour {
+	public void PlaybackPrerecordedMotion ()
+	{
+		if (!hasLoadedFrames) {
+			frameTextures=importer.ConvertFramesToTextures();
+			hasLoadedFrames = true;
+		}
+		StartPlayback ();
+	}
+
 	public List<byte[]> frames = new List<byte[]>();
 	public List<Texture2D> frameTextures = new List<Texture2D>();
 	bool isPlaying = false;
@@ -23,31 +33,23 @@ public class KinectVideoPlayer : MonoBehaviour {
 		frameTextures = newFrames;
 	}
 
-	List<Texture2D> ReadInFrames ()
-	{
-		List<Texture2D> tempFrames = new List<Texture2D>();
-		string[] files = Directory.GetFiles (FusedSkeleton_FromFile.recordDirectory + "/Videos/");
-		List<string> relevantFiles = new List<string> ();
-		foreach (string s in files) {
-			if(s.Contains (currentFilename))relevantFiles.Add (s);
-		}
-		relevantFiles = relevantFiles.OrderBy(x=>x.Length).ThenBy(x=> x).ToList();
-		foreach (string s in relevantFiles) {
-			Texture2D tex = null;
-			byte[] fileData;
-			fileData = File.ReadAllBytes(s);
-			tex = new Texture2D(2,2);
-			tex.LoadImage(fileData);
-			tempFrames.Add(tex);
-		}
-		hasLoadedFrames = true;
-		return tempFrames;
-	}
 	bool hasLoadedFrames = false;
-	public void PlaybackPrerecordedMotion ()
-	{
-		if(!hasLoadedFrames)frameTextures = ReadInFrames ();
-		StartPlayback ();
+	public VideoImporter importer;
+
+	public void ImportVideoFrames(){
+		if (!hasLoadedFrames) {
+			print ("Importing video via thread");
+						importer = new VideoImporter (FusedSkeleton_FromFile.recordDirectory + "/Videos/", currentFilename);
+			
+						// Create the thread object, passing in the Alpha.Beta method
+						// via a ThreadStart delegate. This does not start the thread.
+						Thread oThread = new Thread (new ThreadStart (importer.ImportVideoData));
+			
+						// Start the thread
+						oThread.Start ();
+						print ("Started thread");
+				} else
+						hasLoadedFrames = true;
 	}
 
 	public void StartPlayback () {
@@ -150,8 +152,6 @@ public class KinectVideoPlayer : MonoBehaviour {
 			
 			}
 		}
-		if (Input.GetKeyDown (KeyCode.S))
-			StartPlayback ();
 	}
 
 	
@@ -164,9 +164,5 @@ public class KinectVideoPlayer : MonoBehaviour {
 	void Tock(){
 		if(stopwatch!=null)
 			print ("VideoPlayback time: "+stopwatch.Elapsed+" RecordedFrames# "+frameTextures.Count);
-	}
-
-	void OnDisable(){
-		print ("something");
 	}
 }

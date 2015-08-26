@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Fusion;
+using System.Threading;
+
+using System;
 
 public class HapticHealthController : MonoBehaviour {
 	public KinectVideoRecorder videoRecorder;
@@ -8,6 +12,7 @@ public class HapticHealthController : MonoBehaviour {
 	public FusedSkeleton_FromFile fusedSkeletonPlayback;
 	public FusedSkeleton_Main fusionSkeleton;
 	public WiMuPlotter wiMuPlotter;
+	public UIController uiController;
 	bool recording = false;
 	bool playing = false;
 	
@@ -27,8 +32,17 @@ public class HapticHealthController : MonoBehaviour {
 
 	}
 
-	void RecordUpdate ()
+	void Awake ()
 	{
+		//Test to show parallel threading
+		/*VideoExporter exporter = new VideoExporter (FusedSkeleton_FromFile.recordDirectory + "/Videos/", "",new List<byte[]>());
+		
+		// Create the thread object, passing in the Alpha.Beta method
+		// via a ThreadStart delegate. This does not start the thread.
+		Thread oThread = new Thread (new ThreadStart (exporter.TestThread));
+		
+		// Start the thread
+		oThread.Start ();*/
 	}
 
 	void PlaybackUpdate ()
@@ -60,6 +74,10 @@ public class HapticHealthController : MonoBehaviour {
 			if(!recording)
 				RecordFirstMotion();
 		}
+		if (Input.GetKeyDown (KeyCode.T)) {
+			if(!recording)
+				RecordFirstMotion();
+		}
 	}
 
 	void PlaybackPrerecordedMotion (string s)
@@ -67,9 +85,26 @@ public class HapticHealthController : MonoBehaviour {
 		fusedSkeletonPlayback.SetMotionFilename(s);
 		wiMuPlotter.SetMotionFilename(s);
 		videoPlayer.SetMotionFilename(s);
+		videoPlayer.ImportVideoFrames ();
+		//videoPlayer.ImportVideoFramesAsyncronously ();
+		StartCoroutine ("WaitForAsyncronousVideoImport");
+	}
+
+	IEnumerator WaitForAsyncronousVideoImport(){
+
+		while (videoPlayer.importer.videoImported == false)
+		{
+			//print ("Running coroutine");
+			yield return null;
+		}
+		print ("Finished");
+		StartPlaybackVideoLoaded ();
+	}
+
+	void StartPlaybackVideoLoaded(){
+		videoPlayer.PlaybackPrerecordedMotion ();
 		fusedSkeletonPlayback.PlaybackPrerecordedMotion ();
 		wiMuPlotter.PlaybackPrerecordedMotion ();
-		videoPlayer.PlaybackPrerecordedMotion ();
 		playing = true;
 	}
 
