@@ -62,6 +62,14 @@ namespace Fusion
 	} 
 
 	public class FusedSkeleton_Main : MonoBehaviour {
+		public void EnableRenderers(bool kinect, bool fused){
+			if(kinect)sourceView.enableRendering ();
+			if(fused)fusedView.enableRendering ();
+		}
+		public void DisableRenderers(bool kinect, bool fused){
+			if(kinect)sourceView.disableRendering ();
+			if(fused)fusedView.disableRendering ();
+		}
 		string currentFilename = "";
 		public void SetMotionFilename (string s)
 		{
@@ -98,7 +106,7 @@ namespace Fusion
 		// Kinect skeleton links
 		public GameObject fusedViewPrefab;
 		public BodySourceView sourceView;
-		private BodyFusedView fusedView;
+		public BodyFusedView fusedView;
 		public PostureEstimator postureEstimator;
 
 		// Kinect 2 linkage
@@ -472,6 +480,7 @@ namespace Fusion
 							if( GetCalibration( useKinectCalibration ) ) {
 								WimusOnline = true;
 								calibrated = true;
+									UIController.Instance.HasTPosed();
 								ReinitializeOrientations();
 								fusedView.SetDefaultMaterial();	
 							}

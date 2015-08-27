@@ -49,6 +49,48 @@ public class BodySourceView : MonoBehaviour
 		{ Windows.Kinect.JointType.SpineShoulder, Windows.Kinect.JointType.Neck },
 		{ Windows.Kinect.JointType.Neck, Windows.Kinect.JointType.Head },
     };
+	public bool rendering = true;
+	public void disableRendering()
+	{
+		rendering = false;
+		_BodyManager = BodySourceManager.GetComponent<BodySourceManager>();
+		if (_BodyManager == null)
+		{
+			return;
+		}
+		
+		Windows.Kinect.Body[] data = _BodyManager.GetData();
+		foreach (var body in data) {
+						if (body == null) {
+								continue;
+						}
+			
+			if (body.IsTracked) {
+				Destroy(_Bodies[body.TrackingId]);
+				_Bodies.Remove(body.TrackingId);
+						}
+				}
+
+
+		foreach(KeyValuePair<Windows.Kinect.JointType, GameObject> k in rot)
+		{
+			k.Value.SetActive(false);
+			// do something with entry.Value or entry.Key
+		}
+
+	}
+	public void enableRendering()
+	{
+		rendering = true;
+		
+		
+		foreach(KeyValuePair<Windows.Kinect.JointType, GameObject> k in rot)
+		{
+			k.Value.SetActive(true);
+			// do something with entry.Value or entry.Key
+		}
+
+	}	
 
 	void Start()
 	{
@@ -98,23 +140,26 @@ public class BodySourceView : MonoBehaviour
                 _Bodies.Remove(trackingId);
             }
         }
-
-        foreach(var body in data)
-        {
-			if (body != null) 
-			{
-				if (body.IsTracked) 
-				{
-					if (!_Bodies.ContainsKey (body.TrackingId)) 
-					{
-						_Bodies [body.TrackingId] = CreateBodyObject (body.TrackingId);
-					}
+		if (rendering) {
+						foreach (var body in data) {
+								if (body != null) {
+										if (body.IsTracked) {
+												if (!_Bodies.ContainsKey (body.TrackingId)) {
+														_Bodies [body.TrackingId] = CreateBodyObject (body.TrackingId);
+												}
 											
-					RefreshBodyObject (body, _Bodies [body.TrackingId]);
-					currentId = body.TrackingId;
+												RefreshBodyObject (body, _Bodies [body.TrackingId]);
+												currentId = body.TrackingId;
+										}
+								}
+						}
 				}
-			}
-        }
+		
+		if (Input.GetKeyDown (KeyCode.B)) {
+			if (rendering)
+				disableRendering ();
+			else enableRendering();
+		}
     }
     
     private GameObject CreateBodyObject(ulong id)

@@ -7,6 +7,7 @@ using System.Threading;
 using System;
 
 public class HapticHealthController : MonoBehaviour {
+	public static HapticHealthController Instance;
 	public KinectVideoRecorder videoRecorder;
 	public KinectVideoPlayer videoPlayer;
 	public FusedSkeleton_FromFile fusedSkeletonPlayback;
@@ -34,6 +35,7 @@ public class HapticHealthController : MonoBehaviour {
 
 	void Awake ()
 	{
+		Instance = this;
 		//Test to show parallel threading
 		/*VideoExporter exporter = new VideoExporter (FusedSkeleton_FromFile.recordDirectory + "/Videos/", "",new List<byte[]>());
 		
@@ -80,7 +82,7 @@ public class HapticHealthController : MonoBehaviour {
 		}
 	}
 
-	void PlaybackPrerecordedMotion (string s)
+	public void PlaybackPrerecordedMotion (string s)
 	{
 		fusedSkeletonPlayback.SetMotionFilename(s);
 		wiMuPlotter.SetMotionFilename(s);

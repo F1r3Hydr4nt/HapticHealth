@@ -28,7 +28,7 @@ public class PostureEstimator : MonoBehaviour {
 	void Start () {
 
 	}
-	
+	public bool hasTPosed = false;
 	// Update is called once per frame
 	void Update () {
 	

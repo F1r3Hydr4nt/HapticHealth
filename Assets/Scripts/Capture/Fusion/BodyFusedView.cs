@@ -40,6 +40,23 @@ public class BodyFusedView : MonoBehaviour
 	{
 		rendering = false;
 		this.body.SetActive (false);
+		if (rotSpine != null) {
+						rotSpine.SetActive (false);
+						rotRE.SetActive (false);
+						rotLE.SetActive (false);
+						rotLW.SetActive (false);
+						rotRW.SetActive (false);
+						rotLK.SetActive (false);
+						rotRK.SetActive (false);
+						rotLA.SetActive (false);
+						rotRA.SetActive (false);
+						rotLF.SetActive (false);
+						rotRF.SetActive (false);
+						rotLS.SetActive (false);
+						rotRS.SetActive (false);
+						rotRH.SetActive (false);
+						rotLH.SetActive (false);
+				}
 		Debug.LogWarning ("Disable rendering of the Capture.");		
 	}
 	public void enableRendering()
@@ -47,6 +64,23 @@ public class BodyFusedView : MonoBehaviour
 		Debug.LogWarning ("Enable rendering of the Capture.");
 		rendering = true;
 		this.body.SetActive (true);
+		if (rotSpine != null) {
+						rotSpine.SetActive (true);
+						rotRE.SetActive (true);
+						rotLE.SetActive (true);
+						rotLW.SetActive (true);
+						rotRW.SetActive (true);
+						rotLK.SetActive (true);
+						rotRK.SetActive (true);
+						rotLA.SetActive (true);
+						rotRA.SetActive (true);
+						rotLF.SetActive (true);
+						rotRF.SetActive (true);
+						rotLS.SetActive (true);
+						rotRS.SetActive (true);
+						rotRH.SetActive (true);
+						rotLH.SetActive (true);
+				}
 	}	
 
 	private void updateMaterial() {
@@ -161,6 +195,11 @@ public class BodyFusedView : MonoBehaviour
 //			print ("rendering");
 			RefreshBodyObject ();
 		}
+		if (Input.GetKeyDown (KeyCode.B)) {
+						if (rendering)
+								disableRendering ();
+			else enableRendering();
+				}
 	}
 	
 	void Start()
