@@ -23,22 +23,27 @@ public class UIController:MonoBehaviour
 	public FusedSkeleton_Main fusedSkeletonMain;
 	void Awake(){
 		Instance = this;
-		Invoke ("MoveOntoNextStage", 2f);
+		//Invoke ("MoveOntoNextStage", 2f);
+	}
+
+	void Update(){
+		if (Input.GetKeyDown (KeyCode.M))
+						MoveOntoNextStage ();
 	}
 	public void PromptTpose(){
 		instructions.text = "Please T-Pose to calibrate the wearables.";
 	}
 	public void PromptFirstMotionObserve(){
-		fusedSkeletonMain.DisableRenderers (true, true);
+		fusedSkeletonMain.DisableRenderers (true, false);
 		Invoke ("PlayFirstMotion", 2f);
 		instructions.text = "Observe the following recorded motion & prepare to copy it.";
 	}
 	void PlayFirstMotion(){
-		HapticHealthController.Instance.PlaybackPrerecordedMotion ("firstMotion");
-		Invoke ("MoveOntoNextStage", 2f);
+		HapticHealthController.Instance.PlaybackPrerecordedMotion ("firstMotion", true);
+		Invoke ("MoveOntoNextStage", 4f);
 	}
 	public void PromptFirstMotionCopy(){
-		fusedSkeletonMain.EnableRenderers (false, true);
+		wiMuPlotter.StartComparingSignals ();
 		instructions.text = "Attempt to copy that motion as close as possible.";
 	}
 	public void PromptFirstMotionResult(bool isPass){

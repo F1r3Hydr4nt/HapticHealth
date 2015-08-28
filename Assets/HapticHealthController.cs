@@ -70,7 +70,7 @@ public class HapticHealthController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.F))
 			DoublePlayBackSpeed();
 		if (Input.GetKeyDown (KeyCode.P))
-			PlaybackPrerecordedMotion("firstMotion");
+			PlaybackPrerecordedMotion("firstMotion",false);
 		
 		if (Input.GetKeyDown (KeyCode.R)) {
 			if(!recording)
@@ -82,12 +82,13 @@ public class HapticHealthController : MonoBehaviour {
 		}
 	}
 
-	public void PlaybackPrerecordedMotion (string s)
+	public void PlaybackPrerecordedMotion (string s, bool l)
 	{
 		fusedSkeletonPlayback.SetMotionFilename(s);
 		wiMuPlotter.SetMotionFilename(s);
 		videoPlayer.SetMotionFilename(s);
 		videoPlayer.ImportVideoFrames ();
+		isLoopingPlayback = l;
 		//videoPlayer.ImportVideoFramesAsyncronously ();
 		StartCoroutine ("WaitForAsyncronousVideoImport");
 	}
@@ -152,6 +153,8 @@ public class HapticHealthController : MonoBehaviour {
 
 	void StopPlayback(){
 		playing = false;
+		if (isLoopingPlayback)
+						StartPlayback ();
 	}
 
 	void HalfPlayBackSpeed ()

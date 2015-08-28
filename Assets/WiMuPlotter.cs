@@ -7,6 +7,7 @@ using System.Threading;
 using System;
 public class WiMuPlotter : MonoBehaviour {
 	public FusedSkeleton_Main fusedSkeleton;
+
 	string currentFilename = "";
 	public void SetMotionFilename (string s)
 	{
@@ -18,6 +19,13 @@ public class WiMuPlotter : MonoBehaviour {
 		ReadValuesInFromFile ();
 		StartPlayback ();
 	}
+	bool comparingSignals = false;
+	public void StartComparingSignals(){
+		comparator = new AccelerationComparator (wiMuValues1, wiMuValues2);
+		comparingSignals = true;
+	}
+
+	public AccelerationComparator comparator;
 
 	void ReadValuesInFromFile(){
 		wiMuValues1 = new List<float> ();
@@ -40,6 +48,9 @@ public class WiMuPlotter : MonoBehaviour {
 		PlotManager.Instance.PlotCreate("0", 0f, 3f, Color.cyan, new Vector2(10,	10));
 		//  Create a new graph named "MouseX", with a range of 0 to 2000, colour green at position 100,100
 		PlotManager.Instance.PlotCreate("1", Color.yellow, "0");
+		
+		PlotManager.Instance.PlotCreate("2", Color.green, "0");
+		PlotManager.Instance.PlotCreate("3", Color.red, "0");
 		//print ("---- " + i + " " + WIMUsOrientation[ i ].ToString() );
 	}
 
@@ -83,6 +94,8 @@ public class WiMuPlotter : MonoBehaviour {
 	public bool isFinishedPlayback = false;
 	public void StartPlayback ()
 	{
+		if (comparingSignals)
+						comparator.Reset ();
 		startTime = Environment.TickCount;
 		lastUpdateTime = startTime;
 		currentFrame = 0;
@@ -114,29 +127,23 @@ public class WiMuPlotter : MonoBehaviour {
 				//print ("online");
 				float value1 = Mathf.Abs(fusedSkeleton.totalMagnitudes [0]);
 				float value2 = Mathf.Abs(fusedSkeleton.totalMagnitudes [1]);
-				if(!isPlaying){
-				//	print ("notPLaying");
+
 					PlotManager.Instance.PlotAdd ("0", value1);
 					PlotManager.Instance.PlotAdd ("1", value2);
 					if(isRecording){
 						wiMuValues1.Add (value1);
 						wiMuValues2.Add (value2);
 					}
-				}
-				else{
+				if(isPlaying){
 					//print ("isPlayingBack");
 					if(currentFrame<wiMuValues1.Count){
-						PlotManager.Instance.PlotAdd ("0", wiMuValues1[currentFrame]);
-						PlotManager.Instance.PlotAdd ("1", wiMuValues2[currentFrame]);
+						PlotManager.Instance.PlotAdd ("2", wiMuValues1[currentFrame]);
+						PlotManager.Instance.PlotAdd ("3", wiMuValues2[currentFrame]);
+						if(comparingSignals)comparator.CompareValues(currentFrame,value1,value2);
 						currentFrame++;
 					}else StopPlayback();
 				}
-			} else {
-				//print ("not online");
-				//PlotManager.Instance.PlotAdd ("0", 0);
-				//PlotManager.Instance.PlotAdd ("1", 0);
-				
-			}
+			} 
 				//Record here
 
 				//how far past the required time have we gotten?
