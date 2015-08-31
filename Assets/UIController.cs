@@ -26,6 +26,11 @@ public class UIController:MonoBehaviour
 		//Invoke ("MoveOntoNextStage", 2f);
 	}
 
+	public void DisplayFeedback (string s)
+	{
+		instructions.text = s;
+	}
+
 	void Update(){
 		if (Input.GetKeyDown (KeyCode.M))
 						MoveOntoNextStage ();
@@ -35,39 +40,55 @@ public class UIController:MonoBehaviour
 	}
 	public void PromptFirstMotionObserve(){
 		fusedSkeletonMain.DisableRenderers (true, false);
-		Invoke ("PlayFirstMotion", 2f);
-		instructions.text = "Observe the following recorded motion & prepare to copy it.";
 	}
 	void PlayFirstMotion(){
-		HapticHealthController.Instance.PlaybackPrerecordedMotion ("firstMotion", true);
-		Invoke ("MoveOntoNextStage", 4f);
+		instructions.text = "Observe the following Motion.";
+		HapticHealthController.Instance.PlaybackPrerecordedMotion ("firstMotion", false);
 	}
 	public void PromptFirstMotionCopy(){
 		wiMuPlotter.StartComparingSignals ();
-		instructions.text = "Attempt to copy that motion as close as possible.";
+		instructions.text = "Attempt to copy that motion accurately.";
 	}
-	public void PromptFirstMotionResult(bool isPass){
-		if (isPass) {
-						instructions.text = "Attempt to copy that motion as close as possible.";
-		}
-		else {
-			instructions.text = "Attempt to copy that motion as close as possible.";
-		}
-	}
+	public bool firstMotionCompletedSuccessfully = false;
 	int currentStage = 0;
+
+	void CheckIfMotionCompletedSuccessfully ()
+	{
+		wiMuPlotter.StopComparing ();
+		if(wiMuPlotter.comparator.success){
+			firstMotionCompletedSuccessfully=true;
+			DisplayFeedback ("Congratulations!");
+				} else
+						DisplayFeedback (wiMuPlotter.comparator.feedback);
+	}
+
 	public void MoveOntoNextStage(){
-		currentStage++;
+		if (currentStage == 6 && !firstMotionCompletedSuccessfully)
+						currentStage -= 2;
+		else currentStage++;
 		switch (currentStage) {
 		case 1:
 			PromptTpose();
 			break;
 		case 2:
-			PromptFirstMotionObserve();
 			break;
 		case 3:
-			PromptFirstMotionCopy();
+			PromptFirstMotionObserve();
 			break;
 		case 4:
+			print ("PlayFirstMotion");
+			PlayFirstMotion();
+			break;
+		case 5:
+			print ("PromptCopy");
+			PromptFirstMotionCopy();
+			break;
+		case 6:
+			print ("CheckMotion");
+			CheckIfMotionCompletedSuccessfully();
+			break;
+		case 7:
+			CheckIfMotionCompletedSuccessfully();
 			break;
 		}
 	}

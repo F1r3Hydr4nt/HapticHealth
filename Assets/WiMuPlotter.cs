@@ -6,6 +6,14 @@ using System.Linq;
 using System.Threading;
 using System;
 public class WiMuPlotter : MonoBehaviour {
+	public void StopComparing ()
+	{
+		print ("StopComparing");
+		comparingSignals = false;
+//		comparator.CheckHandAccelerationValues ();
+		comparator.CheckHandAccelerationCombinedValues ();
+	}
+
 	public FusedSkeleton_Main fusedSkeleton;
 
 	string currentFilename = "";
@@ -23,6 +31,7 @@ public class WiMuPlotter : MonoBehaviour {
 	public void StartComparingSignals(){
 		comparator = new AccelerationComparator (wiMuValues1, wiMuValues2);
 		comparingSignals = true;
+		print ("StartComparing");
 	}
 
 	public AccelerationComparator comparator;
@@ -133,13 +142,16 @@ public class WiMuPlotter : MonoBehaviour {
 					if(isRecording){
 						wiMuValues1.Add (value1);
 						wiMuValues2.Add (value2);
-					}
+				}
+				if(comparingSignals){
+					//comparator.CompareValues(currentFrame,value1,value2);
+					comparator.AddRealtimeValues(currentFrame,value1,value2);
+				}
 				if(isPlaying){
 					//print ("isPlayingBack");
 					if(currentFrame<wiMuValues1.Count){
 						PlotManager.Instance.PlotAdd ("2", wiMuValues1[currentFrame]);
 						PlotManager.Instance.PlotAdd ("3", wiMuValues2[currentFrame]);
-						if(comparingSignals)comparator.CompareValues(currentFrame,value1,value2);
 						currentFrame++;
 					}else StopPlayback();
 				}

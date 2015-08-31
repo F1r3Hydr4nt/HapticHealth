@@ -14,6 +14,8 @@ using System.Diagnostics;
 
 	public class TactorController : MonoBehaviour
 	{
+	public static TactorController Instance;
+
 		SerialPort comPort = new SerialPort();
 		Regex lineFormat = new Regex(@"\d+ \d+ \d+");
 		
@@ -28,14 +30,17 @@ using System.Diagnostics;
 	public void Update(){
 		if (Input.GetKeyDown (KeyCode.T)) {
 			Toggle1();
+			Toggle2();
 		}
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			SendDurationTo1();
+			SendDurationTo2();
 		}
 	}
 
 	public void Awake()
 		{
+			Instance = this;
 			// Popular list of available COM ports.
 			ArrayList myPortList = new ArrayList();
 			foreach (string name in System.IO.Ports.SerialPort.GetPortNames())
@@ -88,7 +93,10 @@ using System.Diagnostics;
 			}
 		}
 		
-		
+		public void SendDurationToBoth(){
+		SendDurationTo1 ();
+		SendDurationTo2 ();
+		}
 		
 		byte[] tactors = {0, 1, 2, 3};
 		byte[] duration = { 0, 0 };
@@ -99,7 +107,8 @@ using System.Diagnostics;
 			if (comPort.IsOpen)
 			{
 				comPort.Write(tactors, 0, 1);
-				comPort.Write(duration, 0, 2);
+			comPort.Write(duration, 0, 2);
+			print( "Send Duration 1");
 			}
 		}
 		private void SendDurationTo2()
@@ -107,7 +116,8 @@ using System.Diagnostics;
 			if (comPort.IsOpen)
 			{
 				comPort.Write(tactors, 1, 1);
-				comPort.Write(duration, 0, 2);
+			comPort.Write(duration, 0, 2);
+			print( "Send Duration 2");
 			}
 		}
 		
