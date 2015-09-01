@@ -19,7 +19,12 @@ Kinect Settings Behaviour
 #endregion
 #region Namespaces
 using UnityEngine;
+// Runtime code here
+#if UNITY_EDITOR
+// Editor specific code here
 using UnityEditor;
+#endif
+// Runtime code here
 using System;
 using System.IO;
 using System.Linq;
@@ -60,6 +65,9 @@ namespace VclUnityKinect
             this.kinect.IsTracking = GUI.Toggle(TrackingRect, this.kinect.IsTracking, TrackingToggleText);
             GUI.Label(LabelRect, LabelText);
             this.kinect.name = GUI.TextField(TextRect, this.kinect.name, NameMaxLength);
+			// Runtime code here
+			#if UNITY_EDITOR
+			// Editor specific code here
             if (GUI.Button(IntrinsicsRect, IntrinsicsLoadText))
             {
                 LoadIntrinsics(EditorUtility.OpenFolderPanel(IntrinsicsFolderSelectText, IntrinsicsDefaultLocation, this.kinect.name));
@@ -67,7 +75,9 @@ namespace VclUnityKinect
             if (GUI.Button(ExtrinsicsRect, ExtrinsicsLoadText))
             {
                 LoadExtrinsics(EditorUtility.OpenFilePanel(ExtrinsicsSelectText, ExtrinsicsDefaultLocation, ExtrinsicsFileExtension));
-            }
+			}
+			#endif
+			// Runtime code here
             GUI.EndGroup();
 
         }
