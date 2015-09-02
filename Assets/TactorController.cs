@@ -33,8 +33,7 @@ using System.Diagnostics;
 			Toggle2();
 		}
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			SendDurationTo1();
-			SendDurationTo2();
+			SendDurationToAll();
 		}
 	}
 
@@ -93,9 +92,10 @@ using System.Diagnostics;
 			}
 		}
 		
-		public void SendDurationToBoth(){
+		public void SendDurationToAll(){
 		SendDurationTo1 ();
 		SendDurationTo2 ();
+		SendDurationTo3 ();
 		}
 		
 		byte[] tactors = {0, 1, 2, 3};
@@ -110,17 +110,27 @@ using System.Diagnostics;
 			comPort.Write(duration, 0, 2);
 			print( "Send Duration 1");
 			}
-		}
-		private void SendDurationTo2()
+	}
+	private void SendDurationTo2()
+	{
+		if (comPort.IsOpen)
 		{
-			if (comPort.IsOpen)
-			{
-				comPort.Write(tactors, 1, 1);
+			comPort.Write(tactors, 1, 1);
 			comPort.Write(duration, 0, 2);
 			print( "Send Duration 2");
-			}
 		}
-		
+	}
+	
+	private void SendDurationTo3()
+	{
+		if (comPort.IsOpen)
+		{
+			comPort.Write(tactors, 2, 1);
+			comPort.Write(duration, 0, 2);
+			print( "Send Duration 3");
+		}
+	}
+
 		private void ChangeDuration(string s)
 		{
 			try

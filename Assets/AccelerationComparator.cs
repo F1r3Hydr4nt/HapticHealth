@@ -8,6 +8,11 @@ using System;
 
 public class AccelerationComparator
 {
+	public string score {
+		get;
+		set;
+	}
+
 	List<float> motionValues1, motionValues2;
 	List<float> motionValuesRT1, motionValuesRT2;
 	public AccelerationComparator(List<float> values1,List<float> values2){
@@ -48,7 +53,7 @@ public class AccelerationComparator
 		}
 		Debug.Log ("Found max values " + maxIndices [0] + " -> "+motionValues1[maxIndices[0]]+", " + maxIndices [1]+ " -> "+motionValues2[maxIndices[1]]);
 	}
-	float thresholdPercentage = 0.3f;//within 10% either sidep
+	float thresholdPercentage = 0.1f;//within 10% either sidep
 	public bool CompareValues(int frameNo, float value1, float value2){
 //		Debug.Log ("First hand: "+frameNo+". "+value1+ " should be close to " + motionValues1[frameNo]);
 //		Debug.Log ("Second hand: "+frameNo+". "+value2+ " should be close to " + motionValues2[frameNo]);
@@ -78,7 +83,7 @@ public class AccelerationComparator
 						//Debug.Break ();
 		if (frameNo==motionValues1.Count-1&&firstComplete && secondComplete) {
 			//Reset ();
-			TactorController.Instance.SendDurationToBoth();
+			TactorController.Instance.SendDurationToAll();
 			Debug.Break ();
 		}
 		return false;
@@ -132,6 +137,17 @@ public class AccelerationComparator
 				}
 	}
 
+	int CalculatePercentage (float combinedMax, float maxCombinedPeak)
+	{
+		Debug.Log ("Max combined = " + maxCombinedPeak);
+		Debug.Log ("current = " + combinedMax);
+		string result = "";
+		float percentageOfSpeed = (combinedMax / maxCombinedPeak) * 100f;
+		Debug.Log ("percentage = "+percentageOfSpeed);
+		int correction = (int)((1f - (100f / percentageOfSpeed)) * 100f);
+		Debug.Log ("correction = "+correction);
+		return Mathf.Abs(correction);
+	}
 	
 	public void CheckHandAccelerationCombinedValues(){
 				//Debug.Break ();
@@ -140,15 +156,22 @@ public class AccelerationComparator
 						if (((motionValuesRT1 [i] + motionValuesRT2 [i]) * 0.5f) > combinedMax)
 								combinedMax = (motionValuesRT1 [i] + motionValuesRT2 [i]);
 				}
+				float diff = maxCombinedPeak - combinedMax;
+				
 				if ((combinedMax > maxCombinedPeak * (1 - thresholdPercentage))) {
 						if (combinedMax < maxCombinedPeak * (1 + thresholdPercentage)) {
-								success = true;
+							feedback = "Great!"+'\n'+'\n';
+				if(diff<0f)feedback+="Decrease speed slightly by: "+CalculatePercentage(combinedMax,maxCombinedPeak)+"%";
+				else feedback+="Increase speed slightly by: "+CalculatePercentage(combinedMax,maxCombinedPeak)+"%";
 						} else {
-								feedback = "Too FAST!";
+				feedback = "Too FAST!"+'\n'+'\n';
+							feedback+="Decrease speed by: "+CalculatePercentage(combinedMax,maxCombinedPeak)+"%";
 						}
 				} else {
-						feedback = "Too SLOW!";
+			feedback = "Too SLOW!"+'\n'+'\n';
+					feedback+="Increase speed slightly by: "+CalculatePercentage(combinedMax,maxCombinedPeak)+"%";
 				}
+				score = (((100f - CalculatePercentage (combinedMax, maxCombinedPeak)) * 0.1f)).ToString();
 		}
 }
 

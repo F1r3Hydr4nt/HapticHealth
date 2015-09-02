@@ -4,11 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using System.Threading;
-
+using Shimmer;
 using System;
 
 public class UIController:MonoBehaviour
 {
+	public GameObject endPanel;
 	public void HasTPosed ()
 	{
 		if (!hasTPosed) {
@@ -18,17 +19,29 @@ public class UIController:MonoBehaviour
 	}
 	public static bool hasTPosed = false;
 	public WiMuPlotter wiMuPlotter;
-	public Text instructions, timer;
+	public Text instructions, timer, scoreOutOfTen;
+	public GameObject score;
 	public static UIController Instance;
 	public FusedSkeleton_Main fusedSkeletonMain;
 	void Awake(){
 		Instance = this;
 		//Invoke ("MoveOntoNextStage", 2f);
 	}
-
-	public void DisplayFeedback (string s)
+	public GameObject feedbackPanel;
+	public void DisplayFeedback (AccelerationComparator comparator)
 	{
-		instructions.text = s;
+		score.SetActive (false);
+		instructions.text = comparator.feedback;
+		scoreOutOfTen.text = comparator.score;
+		feedbackPanel.SetActive (true);
+		Invoke ("DisplayScore",2f);
+	}
+
+	void DisplayScore(){
+		feedbackPanel.SetActive (false);
+		score.SetActive (true);
+		//LeanTween.scale (score, Vector3.one * 2f, 2f).setEase (LeanTweenType.easeInOutSine);
+
 	}
 
 	void Update(){
@@ -37,12 +50,16 @@ public class UIController:MonoBehaviour
 	}
 	public void PromptTpose(){
 		instructions.text = "Please T-Pose to calibrate the wearables.";
+		feedbackPanel.SetActive (true);
 	}
 	public void PromptFirstMotionObserve(){
+		score.SetActive (false);
+		feedbackPanel.SetActive (false);
 		fusedSkeletonMain.DisableRenderers (true, false);
 	}
 	void PlayFirstMotion(){
 		instructions.text = "Observe the following Motion.";
+		feedbackPanel.SetActive (true);
 		HapticHealthController.Instance.PlaybackPrerecordedMotion ("firstMotion", false);
 	}
 	public void PromptFirstMotionCopy(){
@@ -55,13 +72,12 @@ public class UIController:MonoBehaviour
 	void CheckIfMotionCompletedSuccessfully ()
 	{
 		wiMuPlotter.StopComparing ();
-		if(wiMuPlotter.comparator.success){
-			firstMotionCompletedSuccessfully=true;
-			DisplayFeedback ("Congratulations!");
-				} else
-						DisplayFeedback (wiMuPlotter.comparator.feedback);
+						DisplayFeedback (wiMuPlotter.comparator);
+		attempts++;
+		if (attempts == 3)
+						firstMotionCompletedSuccessfully = true;
 	}
-
+	int attempts = 0;
 	public void MoveOntoNextStage(){
 		if (currentStage == 6 && !firstMotionCompletedSuccessfully)
 						currentStage -= 2;
@@ -88,9 +104,18 @@ public class UIController:MonoBehaviour
 			CheckIfMotionCompletedSuccessfully();
 			break;
 		case 7:
-			CheckIfMotionCompletedSuccessfully();
+			DisplayEndPanel();
 			break;
 		}
 	}
+
+	void DisplayEndPanel(){
+		ReloadLevel ();
+	}
+
+	void ReloadLevel(){
+		ShimmerReceiving.Instance.OnDisable ();
+		Application.LoadLevel ("FusedSkeleton");
+		}
 }
 

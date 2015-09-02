@@ -31,8 +31,10 @@ namespace Shimmer
         internal SensorData[] LatestData { get; private set; }
         #endregion
         #region Unity
+		public static ShimmerReceiving Instance;
         void Awake()
         {
+			Instance = this;
             this.handler = new Sensor_Handler(Sensor_Handler.ServerType.TYPE_SERVER);          
 			this.runThread = new Thread(new ThreadStart(handler.Run))
             {
