@@ -35,23 +35,10 @@ public class AccelerationComparator
 	float maxCombinedPeak = 0f;
 	void FindPeakIndices ()
 	{
-		float firstMax = 0f;
-		float secondMax = 0f;
-		maxIndices = new int[2];
-		maxIndices [0] = maxIndices [1] = 0;
 		for (int i = 0; i<motionValues1.Count; i++) {
 //			Debug.Log ("Values: "+motionValues1[i]+" "+motionValues2[i]);
-			if(motionValues1[i]>firstMax){
-				maxIndices[0]=i;
-				firstMax = motionValues1[i];
-			}
-			if(motionValues2[i]>secondMax){
-				maxIndices[1]=i;
-				secondMax = motionValues2[i];
-			}
-			if(((motionValues1[i]+motionValues2[i])*0.5f)>maxCombinedPeak)maxCombinedPeak = motionValues1[i]+motionValues2[i];
+			if(((motionValues1[i]+motionValues2[i])*0.5f)>maxCombinedPeak)maxCombinedPeak = (motionValues1[i]+motionValues2[i])*0.5f;
 		}
-		Debug.Log ("Found max values " + maxIndices [0] + " -> "+motionValues1[maxIndices[0]]+", " + maxIndices [1]+ " -> "+motionValues2[maxIndices[1]]);
 	}
 	float thresholdPercentage = 0.1f;//within 10% either sidep
 	public bool CompareValues(int frameNo, float value1, float value2){
@@ -154,8 +141,10 @@ public class AccelerationComparator
 				float combinedMax = 0f;
 				for (int i = 0; i<motionValuesRT1.Count; i++) {
 						if (((motionValuesRT1 [i] + motionValuesRT2 [i]) * 0.5f) > combinedMax)
-								combinedMax = (motionValuesRT1 [i] + motionValuesRT2 [i]);
-				}
+								combinedMax = (motionValuesRT1 [i] + motionValuesRT2 [i])*0.5f;
+		}
+		Debug.Log ("Motion peak:" + maxCombinedPeak);
+		Debug.Log ("Realtime peak:" + combinedMax);
 				float diff = maxCombinedPeak - combinedMax;
 				
 				if ((combinedMax > maxCombinedPeak * (1 - thresholdPercentage))) {

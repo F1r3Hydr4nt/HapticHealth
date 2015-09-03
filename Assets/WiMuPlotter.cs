@@ -58,8 +58,8 @@ public class WiMuPlotter : MonoBehaviour {
 		//  Create a new graph named "MouseX", with a range of 0 to 2000, colour green at position 100,100
 		PlotManager.Instance.PlotCreate("1", Color.yellow, "0");
 		
-		PlotManager.Instance.PlotCreate("2", Color.green, "0");
-		PlotManager.Instance.PlotCreate("3", Color.red, "0");
+		//PlotManager.Instance.PlotCreate("2", Color.green, "0");
+		//PlotManager.Instance.PlotCreate("3", Color.red, "0");
 		PlotManager.Instance.PlotCreate("4", Color.green, "0");
 		PlotManager.Instance.PlotCreate("5", Color.green, "0");
 		//print ("---- " + i + " " + WIMUsOrientation[ i ].ToString() );
@@ -145,8 +145,8 @@ public class WiMuPlotter : MonoBehaviour {
 				float value1 = Mathf.Abs(fusedSkeleton.totalMagnitudes [0]);
 				float value2 = Mathf.Abs(fusedSkeleton.totalMagnitudes [1]);
 				
-				PlotManager.Instance.PlotAdd ("0", value1);
-				PlotManager.Instance.PlotAdd ("1", value2);
+				PlotManager.Instance.PlotAdd ("0", (value1+value2)*0.5f);
+				//PlotManager.Instance.PlotAdd ("1", value2);
 				if(isRecording){
 					wiMuValues1.Add (value1);
 					wiMuValues2.Add (value2);
@@ -158,8 +158,8 @@ public class WiMuPlotter : MonoBehaviour {
 				if(isPlaying){
 					//print ("isPlayingBack");
 					if(currentFrame<wiMuValues1.Count){
-						PlotManager.Instance.PlotAdd ("2", wiMuValues1[currentFrame]);
-						PlotManager.Instance.PlotAdd ("3", wiMuValues2[currentFrame]);
+						PlotManager.Instance.PlotAdd ("1", (wiMuValues1[currentFrame]+wiMuValues2[currentFrame])*0.5f);
+						//PlotManager.Instance.PlotAdd ("3", wiMuValues2[currentFrame]);
 						currentFrame++;
 					}else StopPlayback();
 				}

@@ -30,19 +30,33 @@ public class UIController:MonoBehaviour
 	public GameObject feedbackPanel;
 	public void DisplayFeedback (AccelerationComparator comparator)
 	{
-		score.gameObject.transform.parent.gameObject.SetActive (false);
 		instructions.text = comparator.feedback;
-		scoreOutOfTen.text = comparator.score;
+		scoreString = comparator.score;
 		feedbackPanel.SetActive (true);
 		Invoke ("DisplayScore",2f);
 	}
-
+	string scoreString;
 	void DisplayScore(){
-		feedbackPanel.SetActive (false);
-		score.gameObject.transform.parent.gameObject.SetActive (true);
-		//LeanTween.scale (score, Vector3.one * 2f, 2f).setEase (LeanTweenType.easeInOutSine);
+		
+		currentDynamicScore = (GameObject)Instantiate (dynamicScore.gameObject, dynamicScore.transform.position, new Quaternion ());
+		currentDynamicScore.transform.parent = gameObject.transform;
+		totalScoreText.text = totalScore.ToString ();
+		Text t = currentDynamicScore.GetComponent<Text> ();
+		t.text = scoreString;
+		currentDynamicScore.SetActive (true);
+		Invoke ("MoveScoreToWindow", 1.5f);
 
 	}
+	public Text totalScoreText;
+
+GameObject currentDynamicScore;
+public Text dynamicScore;
+public List<Text> attemptLocations;
+	void MoveScoreToWindow(){
+		feedbackPanel.SetActive (false);
+		LeanTween.move (currentDynamicScore, attemptLocations [attempts - 1].transform.position, 1f).setEase (LeanTweenType.easeInOutSine);
+		LeanTween.scale (currentDynamicScore, Vector3.one*0.17f, 1f).setEase (LeanTweenType.easeInOutSine);
+}
 
 	void Update(){
 		if (Input.GetKeyDown (KeyCode.M))
@@ -58,7 +72,6 @@ public class UIController:MonoBehaviour
 		fusedSkeletonMain.DisableRenderers (true, false);
 	}
 	void PlayFirstMotion(){
-		score.gameObject.transform.parent.gameObject.SetActive (false);
 		feedbackPanel.SetActive (false);
 		HapticHealthController.Instance.PlaybackPrerecordedMotion ("firstMotion", false);
 	}
@@ -73,8 +86,8 @@ public class UIController:MonoBehaviour
 	void CheckIfMotionCompletedSuccessfully ()
 	{
 		wiMuPlotter.StopComparing ();
-						DisplayFeedback (wiMuPlotter.comparator);
 		totalScore += float.Parse (wiMuPlotter.comparator.score);
+						DisplayFeedback (wiMuPlotter.comparator);
 		attempts++;
 		if (attempts == 3)
 						firstMotionCompletedSuccessfully = true;
@@ -121,7 +134,6 @@ public class UIController:MonoBehaviour
 		endText.text = "GREAT!" + '\n' + "You scored:";
 		endPanel.SetActive (true);
 		controller.readingKeyboard = false;
-		score.gameObject.transform.parent.gameObject.SetActive (false);
 		//ReloadLevel ();
 
 	}
@@ -144,7 +156,15 @@ public class UIController:MonoBehaviour
 
 	void ReloadLevel(){
 		ShimmerReceiving.Instance.OnDisable ();
-		Application.LoadLevel ("FusedSkeleton");
-		}
+	//	ResetValues ();
+		Application.Quit ();
+	}
+
+	void ResetValues(){
+		fusedSkeletonMain.DisableRenderers (true, true);
+		currentStage = 0;
+		totalScore = 0;
+		attempts = 0;
+	}
 }
 
