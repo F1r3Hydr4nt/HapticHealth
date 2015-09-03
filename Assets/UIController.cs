@@ -40,7 +40,7 @@ public class UIController:MonoBehaviour
 		
 		currentDynamicScore = (GameObject)Instantiate (dynamicScore.gameObject, dynamicScore.transform.position, new Quaternion ());
 		currentDynamicScore.transform.parent = gameObject.transform;
-		totalScoreText.text = totalScore.ToString ();
+		totalScoreText.text = totalScore.ToString();
 		Text t = currentDynamicScore.GetComponent<Text> ();
 		t.text = scoreString;
 		currentDynamicScore.SetActive (true);
@@ -59,8 +59,10 @@ public List<Text> attemptLocations;
 }
 
 	void Update(){
-		if (Input.GetKeyDown (KeyCode.M))
-						MoveOntoNextStage ();
+		if (controller.readingKeyboard) {
+						if (Input.GetKeyDown (KeyCode.M))
+								MoveOntoNextStage ();
+				}
 	}
 	public void PromptTpose(){
 		instructions.text = "Please T-Pose to calibrate the wearables.";

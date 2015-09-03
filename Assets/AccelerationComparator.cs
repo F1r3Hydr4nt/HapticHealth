@@ -160,7 +160,7 @@ public class AccelerationComparator
 			feedback = "Too SLOW!"+'\n'+'\n';
 					feedback+="Increase speed slightly by: "+CalculatePercentage(combinedMax,maxCombinedPeak)+"%";
 				}
-				score = (((100f - CalculatePercentage (combinedMax, maxCombinedPeak)) * 0.1f)).ToString();
+		score = Mathf.Clamp(UIController.Round((((100f - CalculatePercentage (combinedMax, maxCombinedPeak)) * 0.1f)),1),0,1).ToString();
 		}
 }
 
