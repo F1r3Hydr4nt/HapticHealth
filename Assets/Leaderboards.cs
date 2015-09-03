@@ -39,13 +39,13 @@ public class Leaderboards : MonoBehaviour {
 		File.WriteAllLines (filePath, newEntries.ToArray ());
 	}
 
-	public static void AddScoreIfInTopTen(int score, string name){
+	public static void AddScoreIfInTopTen(float score, string name){
 		string[] currentEntries = ReadLeaderboardFromFile ();
-		List<int> scores = new List<int> ();
+		List<float> scores = new List<float> ();
 		print ("currentEntry "+score);
 		foreach (string s in currentEntries) {
 			print ("currentEntry "+s);
-			scores.Add (int.Parse(s.Split(' ')[1]));
+			scores.Add (float.Parse(s.Split(' ')[1]));
 		}
 		int i = 0;
 		int newEntryIndex = 0;

@@ -19,7 +19,7 @@ public class LeaderboardUI : MonoBehaviour {
 				rows[i] = fileRows[i];
 			}
 			while (i<10) {
-			rows[i] = "AAA 000";
+			rows[i] = "A 0";
 			i++;
 				}
 		//}
@@ -27,6 +27,11 @@ public class LeaderboardUI : MonoBehaviour {
 	}
 
 	public void Populate(string[]data){
+		if (rows != null) {
+						foreach (LeaderboardRow r in rows)
+								Destroy (r.gameObject);
+				}
+		row.gameObject.SetActive (true);
 		rows = new List<LeaderboardRow> ();
 		for(int i = 0;i<10;i++){
 			LeaderboardRow newRow = ((GameObject)GameObject.Instantiate(row.gameObject,row.transform.position,row.transform.rotation)).GetComponent<LeaderboardRow>();
@@ -35,7 +40,8 @@ public class LeaderboardUI : MonoBehaviour {
 			newRow.Position(i,60f,row.rectT);
 			rows.Add(newRow);
 		}
-		Destroy (row.gameObject);
+		row.gameObject.SetActive (false);
+		//Destroy (row.gameObject);
 	}
 
 }

@@ -30,7 +30,7 @@ public class UIController:MonoBehaviour
 	public GameObject feedbackPanel;
 	public void DisplayFeedback (AccelerationComparator comparator)
 	{
-		score.SetActive (false);
+		score.gameObject.transform.parent.gameObject.SetActive (false);
 		instructions.text = comparator.feedback;
 		scoreOutOfTen.text = comparator.score;
 		feedbackPanel.SetActive (true);
@@ -39,7 +39,7 @@ public class UIController:MonoBehaviour
 
 	void DisplayScore(){
 		feedbackPanel.SetActive (false);
-		score.SetActive (true);
+		score.gameObject.transform.parent.gameObject.SetActive (true);
 		//LeanTween.scale (score, Vector3.one * 2f, 2f).setEase (LeanTweenType.easeInOutSine);
 
 	}
@@ -53,16 +53,17 @@ public class UIController:MonoBehaviour
 		feedbackPanel.SetActive (true);
 	}
 	public void PromptFirstMotionObserve(){
-		score.SetActive (false);
-		feedbackPanel.SetActive (false);
+		instructions.text = "Observe the following Motion.";
+		feedbackPanel.SetActive (true);
 		fusedSkeletonMain.DisableRenderers (true, false);
 	}
 	void PlayFirstMotion(){
-		instructions.text = "Observe the following Motion.";
-		feedbackPanel.SetActive (true);
+		score.gameObject.transform.parent.gameObject.SetActive (false);
+		feedbackPanel.SetActive (false);
 		HapticHealthController.Instance.PlaybackPrerecordedMotion ("firstMotion", false);
 	}
 	public void PromptFirstMotionCopy(){
+		feedbackPanel.SetActive (true);
 		wiMuPlotter.StartComparingSignals ();
 		instructions.text = "Attempt to copy that motion accurately.";
 	}
@@ -73,11 +74,13 @@ public class UIController:MonoBehaviour
 	{
 		wiMuPlotter.StopComparing ();
 						DisplayFeedback (wiMuPlotter.comparator);
+		totalScore += float.Parse (wiMuPlotter.comparator.score);
 		attempts++;
 		if (attempts == 3)
 						firstMotionCompletedSuccessfully = true;
 	}
 	int attempts = 0;
+	float totalScore = 0f;
 	public void MoveOntoNextStage(){
 		if (currentStage == 6 && !firstMotionCompletedSuccessfully)
 						currentStage -= 2;
@@ -106,11 +109,37 @@ public class UIController:MonoBehaviour
 		case 7:
 			DisplayEndPanel();
 			break;
+		case 8:
+			ReloadLevel();
+			break;
 		}
 	}
-
+	public Text endScore, endText;
+	public HapticHealthController controller;
 	void DisplayEndPanel(){
-		ReloadLevel ();
+		endScore.text = Round(totalScore,1).ToString();
+		endText.text = "GREAT!" + '\n' + "You scored:";
+		endPanel.SetActive (true);
+		controller.readingKeyboard = false;
+		score.gameObject.transform.parent.gameObject.SetActive (false);
+		//ReloadLevel ();
+
+	}
+	public static float Round(float value, int digits)
+	{
+		float mult = Mathf.Pow(10.0f, (float)digits);
+		return Mathf.Round(value * mult) / mult;
+	}
+	public InputField inputField;
+	public LeaderboardUI leaderboard;
+	public void OkButtonClick(){
+		if (inputField.text != "") {
+			endPanel.SetActive(false);
+			string nickname = inputField.text;
+			Leaderboards.AddScoreIfInTopTen(totalScore,nickname);
+			leaderboard.LoadBoards();
+			controller.readingKeyboard = true;
+		}
 	}
 
 	void ReloadLevel(){

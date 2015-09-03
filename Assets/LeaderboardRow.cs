@@ -13,9 +13,8 @@ public class LeaderboardRow : MonoBehaviour {
 		print (split [0]);
 		name.text = split [0];
 		print (split [1]);
-		
-		string commaSeparated = int.Parse(split [1]).ToString("#,##0");
-		score.text = commaSeparated;
+		//string commaSeparated = int.Parse(split [1]).ToString("#,##0");
+		score.text = split[1];
 	}
 	public void Position(int index, float height,RectTransform r){
 		print (height);

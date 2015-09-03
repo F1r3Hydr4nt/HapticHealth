@@ -25,8 +25,9 @@ public class HapticHealthController : MonoBehaviour {
 	public enum ControllerState {RECORDING, PLAYBACK, IDLE};
 	public static ControllerState state = ControllerState.IDLE;
 	bool isLoopingPlayback = true;
+	public bool readingKeyboard = true;
 	void Update () {
-		ProcessKeyboardInput ();
+		if(readingKeyboard)ProcessKeyboardInput ();
 		if (playing) {
 			if(wiMuPlotter.isFinishedPlayback&&fusedSkeletonPlayback.isFinishedPlayback&&videoPlayer.isFinishedPlayback &&playing)StopPlayback();
 		}
