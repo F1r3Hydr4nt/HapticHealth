@@ -131,8 +131,8 @@ public class WiMuPlotter : MonoBehaviour {
 		//PlotManager.Instance.PlotAdd ("4", 1f);
 		//PlotManager.Instance.PlotAdd ("4", 2f);
 		//PlotManager.Instance.PlotAdd ("4", 3f);
-		PlotManager.Instance.PlotAdd ("4", 1.2f);
-		PlotManager.Instance.PlotAdd ("5", 2.4f);
+		PlotManager.Instance.PlotAdd ("4", 1.25f);
+		PlotManager.Instance.PlotAdd ("5", 1.55f);
 		int currentTimeMilliseconds = Environment.TickCount;
 		int timeElapsed = currentTimeMilliseconds - lastUpdateTime;
 		//if we have gone over the required elapsed Time

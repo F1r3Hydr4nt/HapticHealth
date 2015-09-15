@@ -31,18 +31,19 @@ public class UIController:MonoBehaviour
 	public void DisplayFeedback (AccelerationComparator comparator)
 	{
 		instructions.text = comparator.feedback;
-		scoreString = comparator.score;
+		scoreFloat = comparator.score;
 		feedbackPanel.SetActive (true);
 		Invoke ("DisplayScore",2f);
 	}
 	string scoreString;
+	float scoreFloat;
 	void DisplayScore(){
 		
 		currentDynamicScore = (GameObject)Instantiate (dynamicScore.gameObject, dynamicScore.transform.position, new Quaternion ());
 		currentDynamicScore.transform.parent = gameObject.transform;
 		totalScoreText.text = totalScore.ToString();
 		Text t = currentDynamicScore.GetComponent<Text> ();
-		t.text = scoreString;
+		t.text = Round (scoreFloat,1).ToString();
 		currentDynamicScore.SetActive (true);
 		Invoke ("MoveScoreToWindow", 1.5f);
 
@@ -88,7 +89,7 @@ public List<Text> attemptLocations;
 	void CheckIfMotionCompletedSuccessfully ()
 	{
 		wiMuPlotter.StopComparing ();
-		totalScore += float.Parse (wiMuPlotter.comparator.score);
+		totalScore += wiMuPlotter.comparator.score;
 						DisplayFeedback (wiMuPlotter.comparator);
 		attempts++;
 		if (attempts == 3)

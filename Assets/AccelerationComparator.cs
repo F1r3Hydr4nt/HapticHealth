@@ -8,7 +8,7 @@ using System;
 
 public class AccelerationComparator
 {
-	public string score {
+	public float score {
 		get;
 		set;
 	}
@@ -160,7 +160,7 @@ public class AccelerationComparator
 			feedback = "Too SLOW!"+'\n'+'\n';
 					feedback+="Increase speed slightly by: "+CalculatePercentage(combinedMax,maxCombinedPeak)+"%";
 				}
-		score = Mathf.Clamp(UIController.Round((((100f - CalculatePercentage (combinedMax, maxCombinedPeak)) * 0.1f)),1),0,1).ToString();
+		score = Mathf.Clamp(UIController.Round((((100f - CalculatePercentage (combinedMax, maxCombinedPeak)) * 0.1f)),1),0,10);
 		}
 }
 
