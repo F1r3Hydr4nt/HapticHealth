@@ -11,7 +11,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-
+//This is the Arduino interface, which works but wasn't used
 	public class TactorController : MonoBehaviour
 	{
 	public static TactorController Instance;

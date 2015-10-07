@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System;
+//This class controls the WiMu value plotting
 public class WiMuPlotter : MonoBehaviour {
 	public void StopComparing ()
 	{
@@ -35,7 +36,7 @@ public class WiMuPlotter : MonoBehaviour {
 	}
 	
 	public AccelerationComparator comparator;
-	
+	//Read in values from file
 	void ReadValuesInFromFile(){
 		wiMuValues1 = new List<float> ();
 		wiMuValues2 = new List<float> ();
@@ -64,7 +65,7 @@ public class WiMuPlotter : MonoBehaviour {
 		PlotManager.Instance.PlotCreate("5", Color.green, "0");
 		//print ("---- " + i + " " + WIMUsOrientation[ i ].ToString() );
 	}
-	
+	//Start Recording values
 	bool isRecording = false;
 	public void StartRecording ()
 	{
@@ -99,7 +100,7 @@ public class WiMuPlotter : MonoBehaviour {
 		}
 		System.IO.File.WriteAllText(FusedSkeleton_FromFile.recordDirectory+@currentFilename+".txt",valueFile);
 	}
-	
+	//Playback functions, plays back values from file
 	int currentFrame;
 	bool isPlaying = false;
 	public bool isFinishedPlayback = false;
@@ -183,6 +184,7 @@ public class WiMuPlotter : MonoBehaviour {
 		}
 		
 	}
+	//Timing functions
 	System.Diagnostics.Stopwatch stopwatch;
 	
 	void Tick(){

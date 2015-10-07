@@ -5,7 +5,7 @@ using Fusion;
 using System.Threading;
 
 using System;
-
+//This class controls the main scene
 public class HapticHealthController : MonoBehaviour {
 	public static HapticHealthController Instance;
 	public KinectVideoRecorder videoRecorder;

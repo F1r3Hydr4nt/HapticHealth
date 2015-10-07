@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System;
 
+//This function compares realtime wimu values versus locally saved wimu values
 public class AccelerationComparator
 {
 	public float score {
